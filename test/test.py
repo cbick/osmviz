@@ -1,5 +1,7 @@
 from animation import SimViz, TrackingViz, Simulation
+from manager import PygameImageManager, PILImageManager, OSMManager
 import pygame
+import PIL.Image as Image
 
 Inf = float('inf')
 
@@ -47,7 +49,7 @@ def test_sim( route, zoom, image="images/train.png" ):
     sim = Simulation([viz],[],0)
     sim.run(speed=0,refresh_rate=0.1,osmzoom=zoom)
 
-def test_one():
+def test_sim_one():
     begin_ll = 45+46.0/60 , -(68+39.0/60)
     end_ll = 30+3.0/60 , -(118+15.0/60)
 
@@ -55,11 +57,17 @@ def test_one():
               end_ll+(100,) ]
     test_sim(route,6)
 
-
+def test_pil():
+    imgr = PILImageManager('RGB')
+    osm = OSMManager(image_manager=imgr)
+    image,bnds = osm.createOSMImage( (30,35,-117,-112), 9 )
+    wh_ratio = float(image.size[0]) / image.size[1]
+    image2 = image.resize( (int(800*wh_ratio),800), Image.ANTIALIAS )
+    del image
+    image2.show()
 
 
 
 if __name__ == '__main__':
-    test_one()
-
-    
+    test_sim_one()
+    test_pil()

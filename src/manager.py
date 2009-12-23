@@ -77,8 +77,8 @@ class ImageManager(object):
 
     try:
       img = self.load_image_file(imagef)
-    except:
-      raise Exception, "Could not load image "+str(imagef)
+    except Exception, e:
+      raise Exception, "Could not load image "+str(imagef)+"\n"+str(e)
 
     self.paste_image(img,xy)
     del img
@@ -127,15 +127,15 @@ class PILImageManager(ImageManager):
     """
     ImageManager.__init__(self);
     self.mode = mode
-    try: import PIL
+    try: import PIL.Image
     except: raise Exception, "PIL could not be imported!"
     self.PILImage = PIL.Image
 
   def create_image(self,width,height):
-    return self.PILImage.new(mode,(width,height))
+    return self.PILImage.new(self.mode,(width,height))
 
   def load_image_file(self,imagef):
-    return self.PILImage.open(image);    
+    return self.PILImage.open(imagef);    
   
   def paste_image(self,img,xy):
     self.getImage().paste( img,xy )
