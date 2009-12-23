@@ -226,7 +226,8 @@ class Simulation(object):
 
   def run(self, speed=0.0, windowsize=(1280,800), refresh_rate = 1.0,
           font = "/Library/Frameworks/Python.framework/Versions/2.5/lib/python2.5/site-packages/pygame/freesansbold.ttf",
-          fontsize = 10):
+          fontsize = 10,
+          osmzoom = 14):
     """
     Pops up a window and displays the simulation on it.
     Speed is advancement of sim in seconds/second.
@@ -253,7 +254,7 @@ class Simulation(object):
 
     osm = OSMManager(cache = "maptiles/", 
                      image_manager = PygameImageManager());
-    bg_big, new_bounds = osm.createOSMImage(*self.bounding_box);
+    bg_big, new_bounds = osm.createOSMImage(self.bounding_box,zoom=osmzoom);
     w_h_ratio = float(bg_big.get_width()) / bg_big.get_height();
     # Make the window smaller to keep proportions and stay within 
     # specified windowsize

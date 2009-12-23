@@ -162,7 +162,7 @@ class OSMManager(object):
     self.manager = mgr
 
 
-  def getTileCoord(self, lon_deg, lat_deg, zoom=14):
+  def getTileCoord(self, lon_deg, lat_deg, zoom):
     """
     Given lon,lat coords in DEGREES, and a zoom level,
     returns the (x,y) coordinate of the corresponding tile #.
@@ -176,7 +176,7 @@ class OSMManager(object):
                  / math.pi) / 2.0 * n)
     return(xtile, ytile)
 
-  def getTileURL(self, tile_coord, zoom=14):
+  def getTileURL(self, tile_coord, zoom):
     """
     Given x,y coord of the tile to download, and the zoom level,
     returns the URL from which to download the image.
@@ -184,7 +184,7 @@ class OSMManager(object):
     params = (zoom,tile_coord[0],tile_coord[1])
     return self.server+"/%d/%d/%d.png" % params
 
-  def getLocalTileFilename(self, tile_coord, zoom=14):
+  def getLocalTileFilename(self, tile_coord, zoom):
     """
     Given x,y coord of the tile, and the zoom level,
     returns the filename to which the file would be saved
@@ -194,7 +194,7 @@ class OSMManager(object):
     params = (zoom,tile_coord[0],tile_coord[1]);
     return self.cache + "/%d_%d_%d.png" % params
 
-  def retrieveTileImage(self,tile_coord,zoom=14):
+  def retrieveTileImage(self,tile_coord,zoom):
     """
     Given x,y coord of the tile, and the zoom level,
     retrieves the file to disk if necessary and 
@@ -207,11 +207,11 @@ class OSMManager(object):
       url = self.getTileURL(tile_coord,zoom)
       try:
         urllib.urlretrieve(url, filename=filename);
-      except:
-        raise Exception, "Unable to retrieve URL: "+url
+      except Exception,e:
+        raise Exception, "Unable to retrieve URL: "+url+"\n"+str(e)
     return filename
 
-  def tileNWLatlon(self,tile_coord,zoom=14):
+  def tileNWLatlon(self,tile_coord,zoom):
     """
     Given x,y coord of the tile, and the zoom level,
     returns the (lat,lon) coordinates of the upper
@@ -225,7 +225,7 @@ class OSMManager(object):
     return(lat_deg, lon_deg)
 
 
-  def createOSMImage(self, minlon, maxlon, minlat, maxlat, zoom=14):
+  def createOSMImage(self, (minlat, maxlat, minlon, maxlon), zoom):
     """
     Given bounding latlons (in degrees), and an OSM zoom level,
     creates an image constructed from OSM tiles.
@@ -237,8 +237,8 @@ class OSMManager(object):
     if not self.manager:
       raise Exception, "No ImageManager was specified, cannot create image."
 
-    topleft = minX, minY = self.getTileCoord(minlon, maxlat);
-    bottomright = maxX, maxY = self.getTileCoord(maxlon, minlat);
+    topleft = minX, minY = self.getTileCoord(minlon, maxlat, zoom);
+    bottomright = maxX, maxY = self.getTileCoord(maxlon, minlat, zoom);
     new_maxlat, new_minlon = self.tileNWLatlon( topleft, zoom )
     new_minlat, new_maxlon = self.tileNWLatlon( (maxX+1,maxY+1), zoom )
     # tiles are 256x256
