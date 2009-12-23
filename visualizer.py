@@ -1,7 +1,121 @@
-import pygame
-import math
-import time
+from osmtools.animation import SimViz, TrackingViz, Simulation
 
+
+class BusStopViz(SimViz):
+  """Draws a small square at a bus stop location"""
+  def __init__(self,location,label,color,width=5,
+               drawing_order=0):
+    SimViz.__init__(self,drawing_order)
+    self.label = label;
+    self.loc = location;
+    self.color = color;
+    self.width = width
+
+  def setState(self,simtime,getXY):
+    self.x,self.y = getXY(self.loc[0],self.loc[1]);
+    
+  def drawToSurface(self,surf):
+    width=self.width
+    surf.fill(self.color,pygame.Rect(self.x-width/2,self.y-width/2,
+                                     width,width));
+
+class BusArrivalViz(SimViz):
+  """Draws a circle around a bus when it arrives at a stop"""
+  def __init__(self,matchup,color,width=3,diameter=20,duration=10,
+               drawing_order=10):
+    """matchup should be a GPSBusSchedule object"""
+    SimViz.__init__(self,drawing_order)
+    self.matchup = matchup
+    self.color = color
+    self.width = width
+    self.duration = duration
+    self.diam = diameter
+    self.xys = []
+
+  def setState(self,simtime,getXY):
+    self.xys = []
+    arrived=False
+    bt = self.matchup.bustrack
+    for s in self.matchup.arrival_schedule:
+      arrivetime=s['actual_arrival_time_seconds']
+      if arrivetime is None: continue;
+      if abs(arrivetime-simtime) <= self.duration:
+        arrived=True
+        ll = bt.getLocationAtTime(simtime);
+        if ll is None:
+          if (arrivetime < bt.min_time or arrivetime > bt.max_time):
+            print "WARNING: Bus arrived when it doesn't exist"
+        else:
+          self.xys.append(getXY(*ll))
+      elif arrived: #we stopped arriving places
+        break    
+
+  def drawToSurface(self,surf):
+    for xy in self.xys:
+      pygame.draw.circle(surf,self.color,xy,self.diam/2,self.width)
+
+
+class BusMatchupViz(SimViz):
+  """Draws a line between two bustracks whenever they both exist"""
+  def __init__(self,bt1,bt2,color,width=3,
+               drawing_order = 5):
+    SimViz.__init__(self,drawing_order)
+    self.bt1 = bt1;
+    self.bt2 = bt2;
+    self.color = color;
+    self.width=width
+
+  def setState(self,simtime,getXY):
+    self.xy1 = self.xy2 = None
+    t1,t2 = self.bt1,self.bt2
+    ll1=t1.getLocationAtTime(simtime)
+    if ll1 is None: return
+    ll2 = t2.getLocationAtTime(simtime)
+    if ll2 is None: return
+    self.xy1=getXY(*ll1)
+    self.xy2=getXY(*ll2)
+
+  def drawToSurface(self,surf):
+    if self.xy1 and self.xy2:
+      pygame.draw.line(surf,self.color,self.xy1,self.xy2,self.width);
+
+
+
+  
+class BusTrackViz(TrackingViz):
+  """
+  A transparent wrapper around a BusTrack object. Easy way to specify 
+  a label and an image to display.
+  """
+  def __init__(self,bustrack,label,image,
+               drawing_order=10):
+    """
+    Given bustrack a BusTrack object, label a string, and image a
+    filename, creates a BusTrackViz wrapper around bustrack with
+    the given label and image for visualization.
+    """
+    self.track = bustrack;
+    time_window = bustrack.getRouteTimeInterval()
+    bounding_box = bustrack.getBoundingBox()
+
+    TrackingViz.__init__(self,label,image,
+                         bustrack.getLocationAtTime,
+                         time_window,bounding_box,
+                         drawing_order)
+
+
+  def __eq__(self,other):
+    return (self.track == other.track);
+
+  def __hash__(self):
+    return hash(self.track)
+
+  def __getattr__(self,attr):
+    """This does the wrapping around the bustrack"""
+    return self.track.__getattribute__(attr);
+
+  
+  
 
 
 
