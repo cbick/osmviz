@@ -1,3 +1,5 @@
+import math
+
 class ImageManager(object):
   """
   Simple abstract interface for creating and manipulating images, to be used

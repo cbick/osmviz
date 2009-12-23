@@ -1,0 +1,2 @@
+Need to add all the GTFS BusTrack stuff to the PYTHONPATH variable, and link ../config in order for test to run
+... and also make a maptiles directory in here

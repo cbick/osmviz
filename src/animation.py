@@ -1,5 +1,6 @@
 from manager import OSMManager, PygameImageManager
 import pygame
+import time
 
 Inf = float('inf')
 
@@ -128,9 +129,9 @@ class TrackingViz(SimViz):
     x,y = getXY(*ll)
     self.xy = x,y
 
-  def drawToSurface(self,simtime,surf,getXY):
+  def drawToSurface(self,surf):
     if self.xy:
-      x,y=xy
+      x,y=self.xy
       w,h = self.width,self.height
       x,y = x-w/2 , y-h/2
       surf.blit(self.image, (x,y))
