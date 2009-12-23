@@ -1,0 +1,29 @@
+===============================
+===    OSMTools README      ===
+===============================
+
+OSMTools
+An OpenStreetMap Toolkit for Python
+(License information here)
+(OpenStreetMap licensing info here)
+
+=== About ===
+
+OSMTools is a small set of Python tools for retrieving
+and using OpenStreetMap
+
+== Requirements ==
+
+Python 2.5
+Pygame and/or PIL
+
+=== Installation ===
+
+There is not really anything here for installing
+this into your python library. You can put it there
+manually if you wish, or just add the src directory
+to your PYTHONPATH.
+
+=== Help ===
+
+(Links to documentation here)

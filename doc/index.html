@@ -1,0 +1,40 @@
+<html>
+<head>
+
+<title>
+OSM Tools
+</title>
+
+</head>
+
+<body>
+
+<h3>OSM Tools</h3>
+<h4>An OpenStreetMap Toolkit for Python</h4>
+<p>
+OSMTools is a small set of Python tools for retrieving and using OpenStreetMap (OSM) images. Its original application was to draw a bunch of bus icons moving around on the map, which has been somewhat generalized.
+</p>
+<p>
+With OSMTools you can:
+<ul>
+<li>Grab appropriate rendered OSM tiles from an OSM server
+<li>Patch tiles together into a bigger map
+<li>Easily animate stuff on that map (requires pygame)
+</ul>
+</p>
+
+<h4>Using OSM Tools</h4>
+The code below will show a train traveling the USA. Choo choo!
+<code>
+ start_lat,start_lon = (45.77,-68.65)
+ end_lat,end_lon = (30.05,-118.25)
+ begin_time, end_time = 0, 60
+ 
+ def locAtTime(t): #basic interpolation helper
+   if t &lt 0: return start_lat,start_lon
+   if t &gt 0: 
+
+</code>
+
+</body>
+</html>
