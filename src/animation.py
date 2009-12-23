@@ -1,3 +1,30 @@
+"""
+OpenStreetMap Animation Tool:
+  - Provides easy setup to show things moving around on a map.
+  - Requires pygame.
+
+Basic idea:
+  1. Create TrackingViz objects or your own custom SimViz's
+  2. Create a Simulation object with those Viz's
+  3. Call the Simulation's run() method
+  4. Enjoy the show
+
+The TrackingViz class can be used without any knowledge of Pygame. All you
+need is an image you want to put on the map and a function defining where it
+should be on the map as a function of time.
+
+For any other visualization on the map, you will want to override the
+SimViz class. This will require knowledge of how to use Pygame. Basically
+a Pygame Surface will be passed in when it is time to draw.
+
+The Simulation class just does the following:
+  1. Downloads OSM tiles, patches them together, and resizes
+  2. Displays a window with the map on it
+  3. Runs a timer and has all Viz objects draw to the map at each frame.
+Keyboard input is accepted to control the speed of the simulation.
+
+"""
+
 from manager import OSMManager, PygameImageManager
 import pygame
 import time

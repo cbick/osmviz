@@ -1,3 +1,19 @@
+"""
+OpenStreetMap Management Tool:
+  - Provides simple interface to retrieve and tile OSM images
+  - Can use pygame or PIL (to generate pygame Surfaces or PIL images)
+
+Basic idea:
+  1. Choose an ImageManager class and construct an instance.
+     - Pygame and PIL implementations available
+     - To make your own custom ImageManager, override the ImageManager
+       class.
+  2. Construct an OSMManager object.
+     - Can provide custom OSM server URL, etc.
+  3. Use the OSMManager to retrieve individual tiles and do as you please
+     or patch tiles together into a larger image for you.
+"""
+
 import math
 
 class ImageManager(object):
@@ -7,36 +23,72 @@ class ImageManager(object):
   """
 
   def __init__(self):
-    pass
+    self.image = None
+  
+  ### TO BE OVERRIDDEN ###
+
+  def paste_image(self,img,xy):
+    """
+    Given an already-loaded file, paste it into the internal image
+    at the specified top-left coordinate.
+    """
+    raise Exception, "UNIMPLEMENTED"
+
+  def load_image_file(self,imagef):
+    """
+    Loads specified image file into image object and returns it.
+    """
+    raise Exception, "UNIMPLEMENTED"
+
+  def create_image(self,width,height):
+    """
+    To be overridden: create and return image with specified dimensions
+    """
+    raise Exception, "UNIMPLEMENTED"
+
+  ### END OF TO BE OVERRIDDEN ###
 
   def prepare_image(self,width,height):
     """
     Create and internally store an image whose dimensions
     are those specified by width and height.
     """
-    raise Exception, "UNIMPLEMENTED"
+    if self.image:
+      raise Exception, "Image already prepared."
+    self.image = self.create_image(width,height)
 
   def destroy_image(self):
     """
     Destroys internal representation of the image, if it was
     ever created.
     """
-    raise Exception,"UNIMPLEMENTED"
+    if self.image:
+      del self.image
+    self.image = None
 
-  def paste_image(self,image,xy):
+  def paste_image_file(self,imagef,xy):
     """
     Given the filename of an image, and the x,y coordinates of the 
     location at which to place the top left corner of the contents
     of that image, pastes the image into this object's internal image.
     """
-    raise Exception, "UNIMPLEMENTED"
+    if not self.image:
+      raise Exception, "Image not prepared"
+
+    try:
+      img = self.load_image_file(imagef)
+    except:
+      raise Exception, "Could not load image "+str(imagef)
+
+    self.paste_image(img,xy)
+    del img
 
   def getImage(self):
     """
     Returns some representation of the internal image. The returned value 
     is not for use by the OSMManager.
     """
-    raise Exception, "UNIMPLEMENTED"
+    return self.image
     
 
 
@@ -47,37 +99,19 @@ class PygameImageManager(ImageManager):
   
   def __init__(self):
     ImageManager.__init__(self)
-
     try: import pygame
     except: raise Exception, "Pygame could not be imported!"
     self.pygame = pygame
-    self.image = None
 
-  def prepare_image(self,width,height):
-    if self.image:
-      raise Exception, "Image already prepared."
-    self.image = self.pygame.Surface( (width,height) )
+  def create_image(self,width,height):
+    return self.pygame.Surface( (width,height) )
 
-  def destroy_image(self):
-    if self.image:
-      del self.image
-    self.image = None
-    
-  def paste_image(self,image,xy):
-    if not self.image:
-      raise Exception, "Image not prepared."
+  def load_image_file(self,imagef):
+    return self.pygame.image.load(imagef);
 
-    try: 
-      img = self.pygame.image.load(image);
-    except: 
-      raise Exception, "Could not load image "+str(image)
+  def paste_image(self,img,xy):
+    self.getImage().blit( img,xy )
 
-    self.image.blit( img,xy )
-    del img
-
-
-  def getImage(self):
-    return self.image
 
 
 class PILImageManager(ImageManager):
@@ -93,37 +127,18 @@ class PILImageManager(ImageManager):
     """
     ImageManager.__init__(self);
     self.mode = mode
-    
     try: import PIL
     except: raise Exception, "PIL could not be imported!"
-
     self.PILImage = PIL.Image
-    self.image = None
 
-  def prepare_image(self,width,height):
-    if self.image:
-      raise Exception, "Image already prepared"
-    self.image = self.PILImage.new(mode,(width,height))
+  def create_image(self,width,height):
+    return self.PILImage.new(mode,(width,height))
 
-  def destroy_image(self):
-    if self.image:
-      del self.image
-    self.image = None
-
-  def paste_image(self,image,xy):
-    if not self.image:
-      raise Exception, "Image not yet created."
-    try:
-      img = self.PILImage.open(image);
-    except:
-      raise Exception, "Could not open image "+str(image)
-
-    self.image.paste(img,xy)
-    del img
-
-  def getImage(self):
-    return self.image
-
+  def load_image_file(self,imagef):
+    return self.PILImage.open(image);    
+  
+  def paste_image(self,img,xy):
+    self.getImage().paste( img,xy )
 
 
 
@@ -252,7 +267,7 @@ class OSMManager(object):
         fname = self.retrieveTileImage((x,y),zoom)
         x_off = 256*(x-minX)
         y_off = 256*(y-minY)
-        self.manager.paste_image( fname, (x_off,y_off) )
+        self.manager.paste_image_file( fname, (x_off,y_off) )
     print "... done."
     return (self.manager.getImage(), 
             (new_minlon, new_maxlon, new_minlat, new_maxlat))
