@@ -1,5 +1,5 @@
-from osmtools.animation import SimViz, TrackingViz, Simulation
-
+from animation import SimViz, TrackingViz, Simulation
+import pygame
 
 class BusStopViz(SimViz):
   """Draws a small square at a bus stop location"""
