@@ -203,7 +203,7 @@ def test_matched_GPS(segment_ids):
     vizs.append(BusStopViz(stop,'asdf',pygame.Color(0,0,0),5))
   print "ok"
   sim = Simulation(gtfs_tracks.values()+gps_tracks,vizs);
-  sim.run(speed=0,refresh_rate=0.1);
+  sim.run(speed=0,refresh_rate=0.1,windowsize=(600,600));
 
 service_colors = {
   '1':pygame.Color(255,80,80),
@@ -222,8 +222,8 @@ if __name__ == "__main__":
                    inner join gtf_trips gt on gt.trip_id=tr.trip_id 
                    inner join gtf_routes gr on gt.route_id = gr.route_id
                    inner join gtf_trip_information gti on gti.trip_id=gt.trip_id
-                 where gr.route_short_name in ('19','10') and
-                   27000 <= first_arrival and first_arrival <= 28000
+                 where gr.route_short_name in ('5') and
+                   27000 <= first_arrival and first_arrival <= 29000
               """
               );
   segids = [r['gps_segment_id'] for r in cur];

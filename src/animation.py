@@ -50,7 +50,7 @@ class SimViz(object):
 
   def getBoundingBox(self):
     """
-    Returns (lonmin,lonmax,latmin,latmax) the lat/lon bounds
+    Returns (latmin,latmax,lonmin,lonmax) the lat/lon bounds
     of this visualization object.
     """
     raise Exception, "UNIMPLEMENTED"
@@ -244,10 +244,10 @@ class Simulation(object):
     Given coordinates in lon,lat, and a screen size,
     returns the corresponding (x,y) pixel coordinates.
     """
-    x_ratio = ( (lon - bounds[0]) /
-                (bounds[1]-bounds[0]) )
-    y_ratio = 1.0 - ( (lat - bounds[2]) / 
-                      (bounds[3]-bounds[2]) )
+    x_ratio = ( (lon - bounds[2]) /
+                (bounds[3]-bounds[2]) )
+    y_ratio = 1.0 - ( (lat - bounds[0]) / 
+                      (bounds[1]-bounds[0]) )
     x,y = int(x_ratio*ssize[0]), int(y_ratio*ssize[1])
     return x,y
 

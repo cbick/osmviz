@@ -47,7 +47,7 @@ def test_sim( route, zoom, image="images/train.png" ):
                       bbox,
                       1);
     sim = Simulation([viz],[],0)
-    sim.run(speed=0,refresh_rate=0.1,osmzoom=zoom)
+    sim.run(speed=0,refresh_rate=0.1,osmzoom=zoom,windowsize=(600,600))
 
 def test_sim_one():
     begin_ll = 45+46.0/60 , -(68+39.0/60)

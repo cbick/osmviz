@@ -246,7 +246,7 @@ class OSMManager(object):
     creates an image constructed from OSM tiles.
     Returns (img,bounds) where img is the constructed image (as returned
     by the image manager's "getImage()" method),
-    and bounds is the (lonmin,lonmax,latmin,latmax) bounding box
+    and bounds is the (latmin,latmax,lonmin,lonmax) bounding box
     which the tiles cover.
     """
     if not self.manager:
@@ -270,5 +270,5 @@ class OSMManager(object):
         self.manager.paste_image_file( fname, (x_off,y_off) )
     print "... done."
     return (self.manager.getImage(), 
-            (new_minlon, new_maxlon, new_minlat, new_maxlat))
+            (new_minlat, new_maxlat, new_minlon, new_maxlon))
 
