@@ -43,7 +43,7 @@ Currently it supports images using PIL and/or Pygame.
 
 
 <h3>Using OSM Tools</h3>
-The code below will show a train crossing the USA. Choo choo!
+The code below will show a train running across the USA. Choo choo!
 <code><pre>
   from osmtools.animation import TrackingViz, Simulation
 
@@ -51,7 +51,7 @@ The code below will show a train crossing the USA. Choo choo!
   end_lat,end_lon = (30.05,-118.25) <font color="#FF0000"># Southwest</font>
   begin_time, end_time = 0, 60 <font color="#FF0000"># In 60 seconds!</font>
   
-  def locAtTime(t): <font color="#FF0000"># Basic interpolater</font>
+  def locAtTime(t): <font color="#FF0000"># Basic interpolator</font>
     if t &lt 0: return start_lat,start_lon
     if t &gt 60: return end_lat,end_lon
     frac = t/60.0
