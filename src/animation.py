@@ -7,7 +7,12 @@ Basic idea:
   1. Create TrackingViz objects or your own custom SimViz's
   2. Create a Simulation object with those Viz's
   3. Call the Simulation's run() method
-  4. Enjoy the show
+  4. Run the simulation:
+     - Mouse over icons to display labels
+     - up/down keys increase/decrease speed of simulation
+     - left/right keys move simulation to begin/end of time window
+     - space bar sets speed to zero
+     - escape key exits
 
 The TrackingViz class can be used without any knowledge of Pygame. All you
 need is an image you want to put on the map and a function defining where it
@@ -21,8 +26,8 @@ The Simulation class just does the following:
   1. Downloads OSM tiles, patches them together, and resizes
   2. Displays a window with the map on it
   3. Runs a timer and has all Viz objects draw to the map at each frame.
-Keyboard input is accepted to control the speed of the simulation.
 
+Keyboard input is accepted to control the speed of the simulation.
 """
 
 from manager import OSMManager, PygameImageManager
