@@ -1,4 +1,4 @@
-from animation import SimViz, TrackingViz, Simulation
+from osmtools.animation import SimViz, TrackingViz, Simulation
 import pygame
 
 class BusStopViz(SimViz):
