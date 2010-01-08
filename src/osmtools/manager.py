@@ -29,6 +29,7 @@ class ImageManager(object):
 
   def paste_image(self,img,xy):
     """
+    To be overridden.
     Given an already-loaded file, paste it into the internal image
     at the specified top-left coordinate.
     """
@@ -36,13 +37,15 @@ class ImageManager(object):
 
   def load_image_file(self,imagef):
     """
+    To be overridden.
     Loads specified image file into image object and returns it.
     """
     raise Exception, "UNIMPLEMENTED"
 
   def create_image(self,width,height):
     """
-    To be overridden: create and return image with specified dimensions
+    To be overridden.
+    Create and return image with specified dimensions
     """
     raise Exception, "UNIMPLEMENTED"
 

@@ -55,6 +55,7 @@ class SimViz(object):
 
   def getBoundingBox(self):
     """
+    To be overridden.
     Returns (latmin,latmax,lonmin,lonmax) the lat/lon bounds
     of this visualization object.
     """
@@ -62,15 +63,16 @@ class SimViz(object):
 
   def getTimeInterval(self):
     """
+    To be overridden.
     Returns (begin,end) time values for the existence of this
     visualization object.
-    May return ( -Inf,Inf ) to indicate that
-    it is always present (This is the default behavior).
+    May return ( -Inf,Inf ) to indicate that it is always present.
     """
     raise Exception, "UNIMPLEMENTED"
 
   def setState(self,simtime,getXY):
     """
+    To be overridden.
     Sets the internal state of this viz to the specified time.
     This should be stored internally, for subsequent calls to
     methods such as drawToSurface or mouseIntersect.
@@ -79,6 +81,7 @@ class SimViz(object):
   
   def drawToSurface(self,surf):
     """
+    To be overridden.
     Draws this viz on the supplied surface, according to its
     internal state.
     """
@@ -95,6 +98,7 @@ class SimViz(object):
 
   def getLabel(self):
     """
+    To be overridden (optionally).
     Returns string to be displayed as descriptive label for this
     viz object. Default behavior is to return None, meaning no
     label should ever be displayed.
@@ -104,6 +108,7 @@ class SimViz(object):
 
   def mouseIntersect(self,mousex,mousey):
     """
+    To be overridden.
     Returns True if the given mouse location is inside some
     designated region of this visualization.
     Note that for Simulation purposes, if getLabel() returns
