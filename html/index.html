@@ -50,7 +50,7 @@ from osmtools.animation import TrackingViz, Simulation
 start_lat,start_lon = (45.77,-68.65) <font color="#FF0000"># Northeast</font>
 end_lat,end_lon = (30.05,-118.25) <font color="#FF0000"># Southwest</font>
 begin_time, end_time = 0, 60 <font color="#FF0000"># In 60 seconds!</font>
-  
+
 def locAtTime(t): <font color="#FF0000"># Basic interpolator</font>
     if t &lt 0: return start_lat,start_lon
     if t &gt 60: return end_lat,end_lon
@@ -58,8 +58,8 @@ def locAtTime(t): <font color="#FF0000"># Basic interpolator</font>
     interp_lat = start_lat + frac * (end_lat-start_lat)
     interp_lon = start_lon + frac * (end_lon-start_lon)
     return interp_lat,interp_lon
-  
-  
+
+
 image_f = "images/train.png" 
 zoom = 6 <font color="#FF0000"># OSM zoom level</font>
 viz = TrackingViz("Continental Espresso", image_f, locAtTime,
@@ -68,7 +68,7 @@ viz = TrackingViz("Continental Espresso", image_f, locAtTime,
                   1)
 sim = Simulation([viz,],[],0)
 sim.run(speed=1,refresh_rate=0.1,osmzoom=zoom)
-                   
+
 </pre></code>
 
 <p>
