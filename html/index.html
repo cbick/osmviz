@@ -1,0 +1,110 @@
+<html>
+<head>
+
+<title>
+OSM Tools
+</title>
+
+</head>
+
+<body>
+
+<h3>OSM Tools</h3>
+
+<table border=0 width=70%>
+<tr>
+
+<td width=50% valign=top> 
+
+<h4>An OpenStreetMap Toolkit for Python</h4>
+
+<h4>
+<a href="../doc/index.html">Documentation</a><br>
+<a href="?">Download</a><br>
+</h4>
+
+<h3>About</h3>
+
+<p>
+OSMTools is a small set of Python tools for retrieving and using OpenStreetMap (OSM) images. Its original purpose was to draw a bunch of bus icons moving around on the map, which has been somewhat generalized and expanded.
+</p>
+
+<p>
+With OSMTools you can:
+<ul>
+<li>Grab appropriate rendered OSM tiles from an OSM server
+<li>Patch tiles together into a bigger map
+<li>Easily animate stuff on that map (requires pygame)
+</ul>
+Currently it supports images using PIL and/or Pygame.
+</p>
+
+
+
+
+<h3>Using OSM Tools</h3>
+The code below will show a train running across the USA. Choo choo!
+<code><pre>
+from osmtools.animation import TrackingViz, Simulation
+
+start_lat,start_lon = (45.77,-68.65) <font color="#FF0000"># Northeast</font>
+end_lat,end_lon = (30.05,-118.25) <font color="#FF0000"># Southwest</font>
+begin_time, end_time = 0, 60 <font color="#FF0000"># In 60 seconds!</font>
+
+def locAtTime(t): <font color="#FF0000"># Basic interpolator</font>
+    if t &lt 0: return start_lat,start_lon
+    if t &gt 60: return end_lat,end_lon
+    frac = t/60.0
+    interp_lat = start_lat + frac * (end_lat-start_lat)
+    interp_lon = start_lon + frac * (end_lon-start_lon)
+    return interp_lat,interp_lon
+
+
+image_f = "images/train.png" 
+zoom = 6 <font color="#FF0000"># OSM zoom level</font>
+viz = TrackingViz("Continental Espresso", image_f, locAtTime,
+                   (begin_time,end_time), 
+                   (30,46,-119,-68.5), <font color="#FF0000"># lat/lon bounding box</font>
+                  1)
+sim = Simulation([viz,],[],0)
+sim.run(speed=1,refresh_rate=0.1,osmzoom=zoom)
+
+</pre></code>
+
+<p>
+While the animation is running, you can control it as follows:
+<ul>
+<li>Mousing over the icon displays its label ("Continental Espresso")
+<li>Up/down arrows increase/decrease the speed of simulation (can go backwards in time)
+<li>Left/right arrows set simulation to begin/end of the time window
+<li>Space bar sets the speed to zero
+<li>Escape key exits.
+</ul>
+</p>
+<p>
+To run it yourself you need to have an existing "images/train.png" as well as an empty "maptiles/" directory. These already exist in the "test" directory in the source download; in fact one of the included tests is to show the same train.
+</p>
+
+
+<h3>Links</h3>
+<a href="http://www.openstreetmap.org">OpenStreetMap</a><br>
+<a href="http://pygame.org">Pygame</a><br>
+<a href="http://www.pythonware.com/products/pil/">PIL</a>
+
+
+</td valign>
+
+<td align=right valign=top>
+<img src="buses_moving2.jpg" border=1><br>
+Some buses in San Francisco.<br>
+<img src="trainusa2.jpg" border=1><br>
+All aboard!
+</td>
+
+</tr>
+
+
+</table>
+
+</body>
+</html>

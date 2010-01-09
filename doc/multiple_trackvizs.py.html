@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>multiple_trackvizs.py</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="Generator" content="colorize.py (version 0.3)">
+</head>
+<body>
+<style type="text/css">
+pre.code {
+    font-style: Lucida,"Courier New";
+}
+
+.number {
+    color: #0080C0;
+}
+.operator {
+    color: #000000;
+}
+.string {
+    color: #008000;
+}
+.comment {
+    color: #808080;
+}
+.name {
+    color: #000000;
+}
+.error {
+    color: #FF8080;
+    border: solid 1.5pt #FF0000;
+}
+.keyword {
+    color: #0000FF;
+    font-weight: bold;
+}
+.text {
+    color: #000000;
+}
+
+</style>
+
+<pre class="code">
+<span class="string">"""
+This example demonstrates the animation of multiple icons
+on a map using TrackingViz objects.
+"""</span>
+
+<span class="keyword">from</span> <span class="name">osmtools</span><span class="operator">.</span><span class="name">animation</span> <span class="keyword">import</span> <span class="name">TrackingViz</span><span class="operator">,</span> <span class="name">Simulation</span>
+
+<span class="comment">## The goal is to show 10 trains racing eastward across the US.
+</span>
+<span class="name">right_lon</span> <span class="operator">=</span> <span class="operator">-</span><span class="operator">(</span><span class="number">68</span><span class="operator">+</span><span class="number">39.0</span><span class="operator">/</span><span class="number">60</span><span class="operator">)</span>
+<span class="name">left_lon</span> <span class="operator">=</span> <span class="operator">-</span><span class="operator">(</span><span class="number">118</span><span class="operator">+</span><span class="number">15.0</span><span class="operator">/</span><span class="number">60</span><span class="operator">)</span>
+<span class="name">top_lat</span> <span class="operator">=</span> <span class="number">45</span><span class="operator">+</span><span class="number">46.0</span><span class="operator">/</span><span class="number">60</span>
+<span class="name">bottom_lat</span> <span class="operator">=</span> <span class="number">30</span><span class="operator">+</span><span class="number">3.0</span><span class="operator">/</span><span class="number">60</span>
+
+<span class="name">begin_time</span> <span class="operator">=</span> <span class="number">0</span>
+<span class="name">end_time</span> <span class="operator">=</span> <span class="number">60</span>
+
+<span class="name">image_f</span> <span class="operator">=</span> <span class="string">"images/train.png"</span>
+<span class="name">zoom</span><span class="operator">=</span><span class="number">6</span>
+<span class="name">num_trains</span> <span class="operator">=</span> <span class="number">10</span>
+
+<span class="name">trackvizs</span> <span class="operator">=</span> <span class="operator">[</span><span class="operator">]</span>
+
+<span class="keyword">def</span> <span class="name">makeInterpolator</span><span class="operator">(</span><span class="name">begin_ll</span><span class="operator">,</span> <span class="name">end_ll</span><span class="operator">,</span> <span class="name">begin_t</span><span class="operator">,</span> <span class="name">end_t</span><span class="operator">)</span><span class="operator">:</span>
+  <span class="keyword">def</span> <span class="name">ret</span><span class="operator">(</span><span class="name">t</span><span class="operator">)</span><span class="operator">:</span>
+    <span class="keyword">if</span> <span class="name">t</span><span class="operator">&lt;</span><span class="name">begin_t</span><span class="operator">:</span>
+      <span class="keyword">return</span> <span class="name">begin_ll</span>
+    <span class="keyword">elif</span> <span class="name">t</span><span class="operator">&gt;</span><span class="name">end_t</span><span class="operator">:</span>
+      <span class="keyword">return</span> <span class="name">end_ll</span>
+    <span class="keyword">else</span><span class="operator">:</span>
+      <span class="name">blat</span><span class="operator">,</span><span class="name">blon</span> <span class="operator">=</span> <span class="name">begin_ll</span>
+      <span class="name">elat</span><span class="operator">,</span><span class="name">elon</span> <span class="operator">=</span> <span class="name">end_ll</span>
+      <span class="name">frac</span> <span class="operator">=</span> <span class="name">float</span><span class="operator">(</span><span class="name">t</span><span class="operator">)</span><span class="operator">/</span><span class="operator">(</span><span class="name">end_t</span><span class="operator">-</span><span class="name">begin_t</span><span class="operator">)</span>
+      <span class="keyword">return</span> <span class="operator">(</span> <span class="name">blat</span> <span class="operator">+</span> <span class="name">frac</span><span class="operator">*</span><span class="operator">(</span><span class="name">elat</span><span class="operator">-</span><span class="name">blat</span><span class="operator">)</span> <span class="operator">,</span> <span class="name">blon</span> <span class="operator">+</span> <span class="name">frac</span><span class="operator">*</span><span class="operator">(</span><span class="name">elon</span><span class="operator">-</span><span class="name">blon</span><span class="operator">)</span> <span class="operator">)</span>
+  <span class="keyword">return</span> <span class="name">ret</span>
+
+<span class="keyword">for</span> <span class="name">i</span> <span class="keyword">in</span> <span class="name">range</span><span class="operator">(</span><span class="name">num_trains</span><span class="operator">)</span><span class="operator">:</span>
+  <span class="name">lat</span> <span class="operator">=</span> <span class="name">bottom_lat</span> <span class="operator">+</span> <span class="name">i</span> <span class="operator">*</span> <span class="operator">(</span><span class="name">top_lat</span><span class="operator">-</span><span class="name">bottom_lat</span><span class="operator">)</span> <span class="operator">/</span> <span class="operator">(</span><span class="name">num_trains</span><span class="operator">-</span><span class="number">1</span><span class="operator">)</span>
+
+  <span class="name">locAtTime</span> <span class="operator">=</span> <span class="name">makeInterpolator</span><span class="operator">(</span> <span class="operator">(</span><span class="name">lat</span><span class="operator">,</span> <span class="name">left_lon</span><span class="operator">)</span><span class="operator">,</span>
+                                <span class="operator">(</span><span class="name">lat</span><span class="operator">,</span> <span class="name">right_lon</span><span class="operator">)</span><span class="operator">,</span>
+                                <span class="name">begin_time</span><span class="operator">,</span> <span class="name">end_time</span> <span class="operator">)</span>
+
+  <span class="name">tviz</span> <span class="operator">=</span> <span class="name">TrackingViz</span><span class="operator">(</span> <span class="string">"Train %d"</span> <span class="operator">%</span><span class="operator">(</span><span class="name">i</span><span class="operator">+</span><span class="number">1</span><span class="operator">,</span><span class="operator">)</span><span class="operator">,</span> <span class="name">image_f</span><span class="operator">,</span> <span class="name">locAtTime</span><span class="operator">,</span>
+                   <span class="operator">(</span><span class="name">begin_time</span><span class="operator">,</span><span class="name">end_time</span><span class="operator">)</span><span class="operator">,</span>
+                   <span class="operator">(</span><span class="number">30</span><span class="operator">,</span><span class="number">46</span><span class="operator">,</span><span class="operator">-</span><span class="number">119</span><span class="operator">,</span><span class="operator">-</span><span class="number">68.5</span><span class="operator">)</span><span class="operator">,</span>
+                   <span class="number">1</span><span class="operator">)</span> <span class="comment">#drawing order doesn't really matter here</span>
+
+  <span class="name">trackvizs</span><span class="operator">.</span><span class="name">append</span><span class="operator">(</span><span class="name">tviz</span><span class="operator">)</span>
+
+
+<span class="name">sim</span> <span class="operator">=</span> <span class="name">Simulation</span><span class="operator">(</span> <span class="name">trackvizs</span><span class="operator">,</span> <span class="operator">[</span><span class="operator">]</span><span class="operator">,</span> <span class="number">0</span> <span class="operator">)</span>
+<span class="name">sim</span><span class="operator">.</span><span class="name">run</span><span class="operator">(</span><span class="name">speed</span><span class="operator">=</span><span class="number">1</span><span class="operator">,</span><span class="name">refresh_rate</span><span class="operator">=</span><span class="number">0.1</span><span class="operator">,</span><span class="name">osmzoom</span><span class="operator">=</span><span class="name">zoom</span><span class="operator">)</span><span class="text"></span>
+</pre></body>
+</html>
