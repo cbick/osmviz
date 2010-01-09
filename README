@@ -2,15 +2,30 @@
 ===    OSMTools README      ===
 ===============================
 
-OSMTools
 An OpenStreetMap Toolkit for Python
+
+=== OSMTools License ===
 (License information here)
-(OpenStreetMap licensing info here)
+
+
+=== OpenStreetMap License ===
+Tiles taken from the openstreetmap.org server
+have a usage policy as outlined here:
+
+http://wiki.openstreetmap.org/wiki/Tile_usage_policy
+
+These tiles are (c) OpenStreetMap & contributors, CC-BY-SA.
+OpenStreetMap: http://www.openstreetmap.org
+CC-BY-SA: http://creativecommons.org/licenses/by-sa/2.0/
+
+You can tell OSMTools to use any slippymap server provided
+tiles that you wish, which may have its own usage policy.
 
 === About ===
 
 OSMTools is a small set of Python tools for retrieving
-and using OpenStreetMap
+and using Mapnik tiles from a Slippy Map server 
+(you may know these as OpenStreetMap images).
 
 == Requirements ==
 
@@ -26,4 +41,4 @@ to your PYTHONPATH.
 
 === Help ===
 
-(Links to documentation here)
+See doc/index.html .

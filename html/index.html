@@ -26,21 +26,27 @@ OSM Tools
 <h3>About</h3>
 
 <p>
-OSMTools is a small set of Python tools for retrieving and using OpenStreetMap (OSM) images. Its original purpose was to draw a bunch of bus icons moving around on the map, which has been somewhat generalized and expanded.
+OSMTools is a small set of Python tools for retrieving and using OpenStreetMap (OSM) images (actually, Mapnik images served by Slippy Map). Its original purpose was to draw a bunch of bus icons moving around on the map, which has been somewhat generalized and expanded.
 </p>
 
 <p>
 With OSMTools you can:
 <ul>
-<li>Grab appropriate rendered OSM tiles from an OSM server
+<li>Grab appropriate rendered OSM tiles from an OSM server of your choosing
 <li>Patch tiles together into a bigger map
 <li>Easily animate stuff on that map (requires pygame)
 </ul>
 Currently it supports images using PIL and/or Pygame.
 </p>
 
-
-
+<h4>A note about OpenStreetMap maps</h4>
+<p>
+If you choose to pull tiles from the <a href="http://www.openstreetmap.org" target="TOP">openstreetmap.org</a> server, then there are some things you should know:
+<ul>
+<li> These tiles have a usage policy, available <a href="http://wiki.openstreetmap.org/wiki/Tile_usage_policy" target="TOP">here</a>.
+<li> These tiles are (c) <a href="http://www.openstreetmap.org" target="TOP">OpenStreetMap</a> and contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/" target="TOP">CC-BY-SA</a>
+</ul>
+</p>
 
 <h3>Using OSM Tools</h3>
 The code below will show a train running across the USA. Choo choo!
@@ -87,9 +93,9 @@ To run it yourself you need to have an existing "images/train.png" as well as an
 
 
 <h3>Links</h3>
-<a href="http://www.openstreetmap.org">OpenStreetMap</a><br>
-<a href="http://pygame.org">Pygame</a><br>
-<a href="http://www.pythonware.com/products/pil/">PIL</a>
+<a href="http://www.openstreetmap.org" target="TOP">OpenStreetMap</a><br>
+<a href="http://pygame.org" target="TOP">Pygame</a><br>
+<a href="http://www.pythonware.com/products/pil/" target="TOP">PIL</a>
 
 
 </td valign>
