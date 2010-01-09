@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>custom_animations.py</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="Generator" content="colorize.py (version 0.3)">
+</head>
+<body>
+<style type="text/css">
+pre.code {
+    font-style: Lucida,"Courier New";
+}
+
+.number {
+    color: #0080C0;
+}
+.operator {
+    color: #000000;
+}
+.string {
+    color: #008000;
+}
+.comment {
+    color: #808080;
+}
+.name {
+    color: #000000;
+}
+.error {
+    color: #FF8080;
+    border: solid 1.5pt #FF0000;
+}
+.keyword {
+    color: #0000FF;
+    font-weight: bold;
+}
+.text {
+    color: #000000;
+}
+
+</style>
+
+<pre class="code">
+<span class="string">"""
+This example demonstrates how to subclass the SimViz class
+in order to create your own custom visualizations. This is
+if you want to do something besides just show icons moving
+on the map.
+"""</span>
+
+<span class="keyword">from</span> <span class="name">osmtools</span><span class="operator">.</span><span class="name">animation</span> <span class="keyword">import</span> <span class="name">SimViz</span><span class="operator">,</span> <span class="name">TrackingViz</span><span class="operator">,</span> <span class="name">Simulation</span>
+<span class="keyword">import</span> <span class="name">pygame</span>
+
+<span class="comment">## Our goal is to show a train lassoed to denver, running around it.
+</span>
+<span class="name">red</span> <span class="operator">=</span> <span class="name">pygame</span><span class="operator">.</span><span class="name">Color</span><span class="operator">(</span><span class="string">"red"</span><span class="operator">)</span>
+
+<span class="keyword">class</span> <span class="name">LassoViz</span><span class="operator">(</span><span class="name">SimViz</span><span class="operator">)</span><span class="operator">:</span>
+  <span class="string">"""
+  LassoViz draws a line between two (optionally moving) locations.
+  """</span>
+
+  <span class="keyword">def</span> <span class="name">__init__</span><span class="operator">(</span><span class="name">self</span><span class="operator">,</span> <span class="name">getLocAtTime1</span><span class="operator">,</span> <span class="name">getLocAtTime2</span><span class="operator">,</span>
+               <span class="name">linecolor</span><span class="operator">=</span><span class="name">red</span><span class="operator">,</span> <span class="name">linewidth</span><span class="operator">=</span><span class="number">3</span><span class="operator">,</span>
+               <span class="name">drawingOrder</span><span class="operator">=</span><span class="number">0</span><span class="operator">)</span><span class="operator">:</span>
+    <span class="string">"""
+    getLocAtTime 1 and 2 represent the location of the 1st and 2nd
+    endpoint of this lasso, respectively. They should take a single 
+    argument (time) and return the (lat,lon) of that endpoint.
+    """</span>
+    <span class="name">SimViz</span><span class="operator">.</span><span class="name">__init__</span><span class="operator">(</span><span class="name">self</span><span class="operator">,</span> <span class="name">drawingOrder</span><span class="operator">)</span><span class="operator">;</span>
+    <span class="name">self</span><span class="operator">.</span><span class="name">xy1</span> <span class="operator">=</span> <span class="name">None</span>
+    <span class="name">self</span><span class="operator">.</span><span class="name">xy2</span> <span class="operator">=</span> <span class="name">None</span>
+    <span class="name">self</span><span class="operator">.</span><span class="name">linecolor</span> <span class="operator">=</span> <span class="name">linecolor</span>
+    <span class="name">self</span><span class="operator">.</span><span class="name">linewidth</span> <span class="operator">=</span> <span class="name">linewidth</span>
+    <span class="name">self</span><span class="operator">.</span><span class="name">getLoc1</span> <span class="operator">=</span> <span class="name">getLocAtTime1</span>
+    <span class="name">self</span><span class="operator">.</span><span class="name">getLoc2</span> <span class="operator">=</span> <span class="name">getLocAtTime2</span>
+
+  <span class="keyword">def</span> <span class="name">setState</span><span class="operator">(</span><span class="name">self</span><span class="operator">,</span> <span class="name">simtime</span><span class="operator">,</span> <span class="name">getXY</span><span class="operator">)</span><span class="operator">:</span>
+    <span class="name">self</span><span class="operator">.</span><span class="name">xy1</span> <span class="operator">=</span> <span class="name">getXY</span><span class="operator">(</span><span class="operator">*</span><span class="name">self</span><span class="operator">.</span><span class="name">getLoc1</span><span class="operator">(</span><span class="name">simtime</span><span class="operator">)</span><span class="operator">)</span>
+    <span class="name">self</span><span class="operator">.</span><span class="name">xy2</span> <span class="operator">=</span> <span class="name">getXY</span><span class="operator">(</span><span class="operator">*</span><span class="name">self</span><span class="operator">.</span><span class="name">getLoc2</span><span class="operator">(</span><span class="name">simtime</span><span class="operator">)</span><span class="operator">)</span>
+
+  <span class="keyword">def</span> <span class="name">drawToSurface</span><span class="operator">(</span><span class="name">self</span><span class="operator">,</span> <span class="name">surf</span><span class="operator">)</span><span class="operator">:</span>
+    <span class="name">pygame</span><span class="operator">.</span><span class="name">draw</span><span class="operator">.</span><span class="name">line</span><span class="operator">(</span><span class="name">surf</span><span class="operator">,</span> <span class="name">self</span><span class="operator">.</span><span class="name">linecolor</span><span class="operator">,</span> <span class="name">self</span><span class="operator">.</span><span class="name">xy1</span><span class="operator">,</span> <span class="name">self</span><span class="operator">.</span><span class="name">xy2</span><span class="operator">,</span>
+                     <span class="name">self</span><span class="operator">.</span><span class="name">linewidth</span><span class="operator">)</span>
+
+  <span class="comment">## So long as we are passing LassoViz's in as part of the scene_viz
+</span>  <span class="comment">## list to a Simulation, we don't need to implement the getLabel,
+</span>  <span class="comment">## getBoundingBox, or mouseIntersect methods.
+</span>
+
+<span class="keyword">class</span> <span class="name">TiedTrain</span><span class="operator">(</span><span class="name">TrackingViz</span><span class="operator">)</span><span class="operator">:</span>
+  <span class="string">"""
+  TiedTrain shows a train tied to a certain location, running around
+  it at a specified distance and frequency.
+  This is partly meant to demonstrate that it's ok to override 
+  the TrackingViz class, too (in fact it's usually easier).
+  """</span>
+
+  <span class="keyword">def</span> <span class="name">__init__</span><span class="operator">(</span><span class="name">self</span><span class="operator">,</span> <span class="name">tiepost</span><span class="operator">,</span> <span class="name">lat_dist</span><span class="operator">,</span> <span class="name">lon_dist</span><span class="operator">,</span> <span class="name">frequency</span><span class="operator">,</span> <span class="name">time_window</span><span class="operator">,</span>
+               <span class="name">label</span><span class="operator">,</span> <span class="name">drawing_order</span><span class="operator">=</span><span class="number">0</span><span class="operator">,</span> <span class="name">image</span><span class="operator">=</span><span class="string">"images/train.png"</span><span class="operator">)</span><span class="operator">:</span>
+    <span class="name">self</span><span class="operator">.</span><span class="name">clat</span><span class="operator">,</span><span class="name">self</span><span class="operator">.</span><span class="name">clon</span> <span class="operator">=</span> <span class="name">tiepost</span>
+    <span class="name">self</span><span class="operator">.</span><span class="name">lat_dist</span> <span class="operator">=</span> <span class="name">lat_dist</span>
+    <span class="name">self</span><span class="operator">.</span><span class="name">lon_dist</span> <span class="operator">=</span> <span class="name">lon_dist</span>
+    <span class="name">self</span><span class="operator">.</span><span class="name">frequency</span> <span class="operator">=</span> <span class="name">int</span><span class="operator">(</span><span class="name">frequency</span><span class="operator">)</span>
+
+    <span class="name">TrackingViz</span><span class="operator">.</span><span class="name">__init__</span><span class="operator">(</span><span class="name">self</span><span class="operator">,</span><span class="name">label</span><span class="operator">,</span><span class="name">image</span><span class="operator">,</span><span class="name">self</span><span class="operator">.</span><span class="name">getLocAtTime</span><span class="operator">,</span><span class="name">time_window</span><span class="operator">,</span>
+                         <span class="operator">(</span><span class="name">self</span><span class="operator">.</span><span class="name">clat</span><span class="operator">-</span><span class="name">self</span><span class="operator">.</span><span class="name">lat_dist</span><span class="operator">,</span> <span class="name">self</span><span class="operator">.</span><span class="name">clat</span><span class="operator">+</span><span class="name">self</span><span class="operator">.</span><span class="name">lat_dist</span><span class="operator">,</span>
+                          <span class="name">self</span><span class="operator">.</span><span class="name">clon</span><span class="operator">-</span><span class="name">self</span><span class="operator">.</span><span class="name">lon_dist</span><span class="operator">,</span> <span class="name">self</span><span class="operator">.</span><span class="name">clon</span><span class="operator">+</span><span class="name">self</span><span class="operator">.</span><span class="name">lon_dist</span><span class="operator">)</span><span class="operator">,</span>
+                         <span class="name">drawing_order</span><span class="operator">)</span>
+
+
+  <span class="keyword">def</span> <span class="name">getLocAtTime</span><span class="operator">(</span><span class="name">self</span><span class="operator">,</span><span class="name">time</span><span class="operator">)</span><span class="operator">:</span>
+    <span class="name">phase</span> <span class="operator">=</span> <span class="name">float</span><span class="operator">(</span><span class="name">time</span> <span class="operator">%</span> <span class="name">self</span><span class="operator">.</span><span class="name">frequency</span><span class="operator">)</span> <span class="operator">/</span> <span class="name">self</span><span class="operator">.</span><span class="name">frequency</span>
+    <span class="keyword">if</span> <span class="name">phase</span> <span class="operator">&lt;</span> <span class="number">0.25</span><span class="operator">:</span>
+      <span class="name">blat</span> <span class="operator">=</span> <span class="name">self</span><span class="operator">.</span><span class="name">clat</span> <span class="operator">-</span> <span class="name">self</span><span class="operator">.</span><span class="name">lat_dist</span>
+      <span class="name">elat</span> <span class="operator">=</span> <span class="name">self</span><span class="operator">.</span><span class="name">clat</span> <span class="operator">+</span> <span class="name">self</span><span class="operator">.</span><span class="name">lat_dist</span>
+      <span class="name">blon</span> <span class="operator">=</span> <span class="name">elon</span> <span class="operator">=</span> <span class="name">self</span><span class="operator">.</span><span class="name">clon</span> <span class="operator">-</span> <span class="name">self</span><span class="operator">.</span><span class="name">lon_dist</span>
+      <span class="name">frac</span> <span class="operator">=</span> <span class="name">phase</span><span class="operator">/</span><span class="number">0.25</span>
+    <span class="keyword">elif</span> <span class="name">phase</span> <span class="operator">&lt;</span> <span class="number">0.5</span><span class="operator">:</span>
+      <span class="name">blat</span> <span class="operator">=</span> <span class="name">elat</span> <span class="operator">=</span> <span class="name">self</span><span class="operator">.</span><span class="name">clat</span> <span class="operator">+</span> <span class="name">self</span><span class="operator">.</span><span class="name">lat_dist</span>
+      <span class="name">blon</span> <span class="operator">=</span> <span class="name">self</span><span class="operator">.</span><span class="name">clon</span> <span class="operator">-</span> <span class="name">self</span><span class="operator">.</span><span class="name">lon_dist</span>
+      <span class="name">elon</span> <span class="operator">=</span> <span class="name">self</span><span class="operator">.</span><span class="name">clon</span> <span class="operator">+</span> <span class="name">self</span><span class="operator">.</span><span class="name">lon_dist</span>
+      <span class="name">frac</span> <span class="operator">=</span> <span class="operator">(</span><span class="name">phase</span><span class="operator">-</span><span class="number">0.25</span><span class="operator">)</span><span class="operator">/</span><span class="number">0.25</span>
+    <span class="keyword">elif</span> <span class="name">phase</span> <span class="operator">&lt;</span> <span class="number">0.75</span><span class="operator">:</span>
+      <span class="name">blat</span> <span class="operator">=</span> <span class="name">self</span><span class="operator">.</span><span class="name">clat</span> <span class="operator">+</span> <span class="name">self</span><span class="operator">.</span><span class="name">lat_dist</span>
+      <span class="name">elat</span> <span class="operator">=</span> <span class="name">self</span><span class="operator">.</span><span class="name">clat</span> <span class="operator">-</span> <span class="name">self</span><span class="operator">.</span><span class="name">lat_dist</span>
+      <span class="name">blon</span> <span class="operator">=</span> <span class="name">elon</span> <span class="operator">=</span> <span class="name">self</span><span class="operator">.</span><span class="name">clon</span> <span class="operator">+</span> <span class="name">self</span><span class="operator">.</span><span class="name">lon_dist</span>
+      <span class="name">frac</span> <span class="operator">=</span> <span class="operator">(</span><span class="name">phase</span><span class="operator">-</span><span class="number">0.5</span><span class="operator">)</span><span class="operator">/</span><span class="number">0.25</span>
+    <span class="keyword">else</span><span class="operator">:</span>
+      <span class="name">blat</span> <span class="operator">=</span> <span class="name">elat</span> <span class="operator">=</span> <span class="name">self</span><span class="operator">.</span><span class="name">clat</span> <span class="operator">-</span> <span class="name">self</span><span class="operator">.</span><span class="name">lat_dist</span>
+      <span class="name">blon</span> <span class="operator">=</span> <span class="name">self</span><span class="operator">.</span><span class="name">clon</span> <span class="operator">+</span> <span class="name">self</span><span class="operator">.</span><span class="name">lon_dist</span>
+      <span class="name">elon</span> <span class="operator">=</span> <span class="name">self</span><span class="operator">.</span><span class="name">clon</span> <span class="operator">-</span> <span class="name">self</span><span class="operator">.</span><span class="name">lon_dist</span>
+      <span class="name">frac</span> <span class="operator">=</span> <span class="operator">(</span><span class="name">phase</span><span class="operator">-</span><span class="number">0.75</span><span class="operator">)</span><span class="operator">/</span><span class="number">0.25</span>
+    <span class="keyword">return</span> <span class="name">blat</span> <span class="operator">+</span> <span class="name">frac</span><span class="operator">*</span><span class="operator">(</span><span class="name">elat</span><span class="operator">-</span><span class="name">blat</span><span class="operator">)</span><span class="operator">,</span> <span class="name">blon</span> <span class="operator">+</span> <span class="name">frac</span><span class="operator">*</span><span class="operator">(</span><span class="name">elon</span><span class="operator">-</span><span class="name">blon</span><span class="operator">)</span>
+
+
+
+<span class="name">denver</span> <span class="operator">=</span> <span class="number">39.756111</span><span class="operator">,</span> <span class="operator">-</span><span class="number">104.994167</span>
+<span class="name">train</span> <span class="operator">=</span> <span class="name">TiedTrain</span><span class="operator">(</span><span class="name">denver</span><span class="operator">,</span> <span class="number">5.0</span><span class="operator">,</span> <span class="number">5.0</span><span class="operator">,</span> <span class="number">60</span><span class="operator">,</span> <span class="operator">(</span><span class="number">0</span><span class="operator">,</span> <span class="number">600</span><span class="operator">)</span><span class="operator">,</span> <span class="string">"Denver Bound"</span><span class="operator">)</span>
+<span class="name">lasso</span> <span class="operator">=</span> <span class="name">LassoViz</span><span class="operator">(</span><span class="name">train</span><span class="operator">.</span><span class="name">getLocAtTime</span><span class="operator">,</span>
+                 <span class="keyword">lambda</span> <span class="name">t</span><span class="operator">:</span> <span class="name">denver</span><span class="operator">)</span>
+
+<span class="name">sim</span> <span class="operator">=</span> <span class="name">Simulation</span><span class="operator">(</span> <span class="operator">[</span><span class="name">train</span><span class="operator">,</span><span class="operator">]</span><span class="operator">,</span> <span class="operator">[</span><span class="name">lasso</span><span class="operator">,</span><span class="operator">]</span><span class="operator">,</span> <span class="number">0</span><span class="operator">)</span>
+<span class="name">sim</span><span class="operator">.</span><span class="name">run</span><span class="operator">(</span><span class="name">refresh_rate</span> <span class="operator">=</span> <span class="number">0.01</span><span class="operator">,</span> <span class="name">speed</span> <span class="operator">=</span> <span class="number">1</span><span class="operator">,</span> <span class="name">osmzoom</span> <span class="operator">=</span> <span class="number">7</span><span class="operator">)</span><span class="text"></span>
+</pre></body>
+</html>

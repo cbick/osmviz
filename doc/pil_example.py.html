@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>pil_example.py</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="Generator" content="colorize.py (version 0.3)">
+</head>
+<body>
+<style type="text/css">
+pre.code {
+    font-style: Lucida,"Courier New";
+}
+
+.number {
+    color: #0080C0;
+}
+.operator {
+    color: #000000;
+}
+.string {
+    color: #008000;
+}
+.comment {
+    color: #808080;
+}
+.name {
+    color: #000000;
+}
+.error {
+    color: #FF8080;
+    border: solid 1.5pt #FF0000;
+}
+.keyword {
+    color: #0000FF;
+    font-weight: bold;
+}
+.text {
+    color: #000000;
+}
+
+</style>
+
+<pre class="code">
+<span class="string">"""
+This example demonstrates how to create and show a PIL image
+of OSM tiles patched together.
+"""</span>
+
+<span class="keyword">from</span> <span class="name">osmtools</span><span class="operator">.</span><span class="name">manager</span> <span class="keyword">import</span> <span class="name">PILImageManager</span><span class="operator">,</span> <span class="name">OSMManager</span>
+<span class="keyword">import</span> <span class="name">PIL</span><span class="operator">.</span><span class="name">Image</span> <span class="keyword">as</span> <span class="name">Image</span>
+
+<span class="name">imgr</span> <span class="operator">=</span> <span class="name">PILImageManager</span><span class="operator">(</span><span class="string">'RGB'</span><span class="operator">)</span>
+<span class="name">osm</span> <span class="operator">=</span> <span class="name">OSMManager</span><span class="operator">(</span><span class="name">image_manager</span><span class="operator">=</span><span class="name">imgr</span><span class="operator">)</span>
+<span class="name">image</span><span class="operator">,</span><span class="name">bnds</span> <span class="operator">=</span> <span class="name">osm</span><span class="operator">.</span><span class="name">createOSMImage</span><span class="operator">(</span> <span class="operator">(</span><span class="number">30</span><span class="operator">,</span><span class="number">35</span><span class="operator">,</span><span class="operator">-</span><span class="number">117</span><span class="operator">,</span><span class="operator">-</span><span class="number">112</span><span class="operator">)</span><span class="operator">,</span> <span class="number">9</span> <span class="operator">)</span>
+<span class="name">wh_ratio</span> <span class="operator">=</span> <span class="name">float</span><span class="operator">(</span><span class="name">image</span><span class="operator">.</span><span class="name">size</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">)</span> <span class="operator">/</span> <span class="name">image</span><span class="operator">.</span><span class="name">size</span><span class="operator">[</span><span class="number">1</span><span class="operator">]</span>
+<span class="name">image2</span> <span class="operator">=</span> <span class="name">image</span><span class="operator">.</span><span class="name">resize</span><span class="operator">(</span> <span class="operator">(</span><span class="name">int</span><span class="operator">(</span><span class="number">800</span><span class="operator">*</span><span class="name">wh_ratio</span><span class="operator">)</span><span class="operator">,</span><span class="number">800</span><span class="operator">)</span><span class="operator">,</span> <span class="name">Image</span><span class="operator">.</span><span class="name">ANTIALIAS</span> <span class="operator">)</span>
+<span class="keyword">del</span> <span class="name">image</span>
+<span class="name">image2</span><span class="operator">.</span><span class="name">show</span><span class="operator">(</span><span class="operator">)</span><span class="text"></span>
+</pre></body>
+</html>
