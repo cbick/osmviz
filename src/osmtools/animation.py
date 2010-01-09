@@ -58,6 +58,9 @@ class SimViz(object):
     To be overridden.
     Returns (latmin,latmax,lonmin,lonmax) the lat/lon bounds
     of this visualization object.
+    Note that for Simulation purposes, this does not need to
+    be implemented if this SimViz is passed in as one of the 
+    scene_viz's (as opposed to an actor_viz).
     """
     raise Exception, "UNIMPLEMENTED"
 

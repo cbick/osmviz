@@ -92,7 +92,10 @@ internal&nbsp;state.</tt></dd></dl>
 
 <dl><dt><a name="SimViz-getBoundingBox"><strong>getBoundingBox</strong></a>(self)</dt><dd><tt>To&nbsp;be&nbsp;overridden.<br>
 Returns&nbsp;(latmin,latmax,lonmin,lonmax)&nbsp;the&nbsp;lat/lon&nbsp;bounds<br>
-of&nbsp;this&nbsp;visualization&nbsp;<a href="__builtin__.html#object">object</a>.</tt></dd></dl>
+of&nbsp;this&nbsp;visualization&nbsp;<a href="__builtin__.html#object">object</a>.<br>
+Note&nbsp;that&nbsp;for&nbsp;<a href="#Simulation">Simulation</a>&nbsp;purposes,&nbsp;this&nbsp;does&nbsp;not&nbsp;need&nbsp;to<br>
+be&nbsp;implemented&nbsp;if&nbsp;this&nbsp;<a href="#SimViz">SimViz</a>&nbsp;is&nbsp;passed&nbsp;in&nbsp;as&nbsp;one&nbsp;of&nbsp;the&nbsp;<br>
+scene_viz's&nbsp;(as&nbsp;opposed&nbsp;to&nbsp;an&nbsp;actor_viz).</tt></dd></dl>
 
 <dl><dt><a name="SimViz-getDrawingOrder"><strong>getDrawingOrder</strong></a>(self)</dt><dd><tt>Returns&nbsp;an&nbsp;integer&nbsp;representing&nbsp;the&nbsp;order&nbsp;in&nbsp;which&nbsp;this&nbsp;viz<br>
 should&nbsp;be&nbsp;drawn&nbsp;relative&nbsp;to&nbsp;other&nbsp;vizs.&nbsp;Vizs&nbsp;with&nbsp;a&nbsp;higher<br>
