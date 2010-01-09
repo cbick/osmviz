@@ -15,6 +15,9 @@ Basic idea:
 """
 
 import math
+import urllib
+import os.path as path
+
 
 class ImageManager(object):
   """
@@ -218,8 +221,6 @@ class OSMManager(object):
     retrieves the file to disk if necessary and 
     returns the local filename.
     """
-    import urllib
-    import os.path as path
     filename = self.getLocalTileFilename(tile_coord,zoom)
     if not path.isfile(filename):
       url = self.getTileURL(tile_coord,zoom)
@@ -275,3 +276,18 @@ class OSMManager(object):
     return (self.manager.getImage(), 
             (new_minlat, new_maxlat, new_minlon, new_maxlon))
 
+
+
+class _useragenthack(urllib.FancyURLopener):
+  def __init__(self,*args):
+    urllib.FancyURLopener.__init__(self,*args)
+    for i,(header,val) in enumerate(self.addheaders):
+      if header == "User-Agent":
+        del self.addheaders[i]
+        break
+    self.addheader('User-Agent',
+                   'OSMTools/1.0 +http://cbick.github.com/osmtools')
+
+#import httplib
+#httplib.HTTPConnection.debuglevel = 1
+urllib._urlopener = _useragenthack()
