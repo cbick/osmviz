@@ -1,3 +1,23 @@
+# Copyright (c) 2010 Colin Bick, Robert Damphousse
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+
 """
 OpenStreetMap Management Tool:
   - Provides simple interface to retrieve and tile OSM images
@@ -15,6 +35,9 @@ Basic idea:
 """
 
 import math
+import urllib
+import os.path as path
+
 
 class ImageManager(object):
   """
@@ -218,8 +241,6 @@ class OSMManager(object):
     retrieves the file to disk if necessary and 
     returns the local filename.
     """
-    import urllib
-    import os.path as path
     filename = self.getLocalTileFilename(tile_coord,zoom)
     if not path.isfile(filename):
       url = self.getTileURL(tile_coord,zoom)
@@ -275,3 +296,18 @@ class OSMManager(object):
     return (self.manager.getImage(), 
             (new_minlat, new_maxlat, new_minlon, new_maxlon))
 
+
+
+class _useragenthack(urllib.FancyURLopener):
+  def __init__(self,*args):
+    urllib.FancyURLopener.__init__(self,*args)
+    for i,(header,val) in enumerate(self.addheaders):
+      if header == "User-Agent":
+        del self.addheaders[i]
+        break
+    self.addheader('User-Agent',
+                   'OSMViz/1.0 +http://cbick.github.com/osmviz')
+
+#import httplib
+#httplib.HTTPConnection.debuglevel = 1
+urllib._urlopener = _useragenthack()

@@ -1,51 +1,53 @@
 <html>
 <head>
 
-<title>
-OSM Tools
-</title>
+<title>OSM Viz</title>
+<link rel="stylesheet" type="text/css" href="css.css"/>
 
 </head>
 
 <body>
 
-<h3>OSM Tools</h3>
-
+<iframe src ="nav.html" id="nav">
+  <p>Your browser does not support iframes. Navigate from <a href="nav.html">here</a>.</p>
+</iframe>
+  <h2>OSM Viz</h2>
+  <hr>
 <table border=0 width=70%>
 <tr>
 
 <td width=50% valign=top> 
 
-<h4>An OpenStreetMap Toolkit for Python</h4>
+<h3>An OpenStreetMap Visualization Toolkit for Python</h3>
 
-<h4>
-<a href="../doc/index.html">Documentation</a><br>
-<a href="?">Download</a><br>
-</h4>
-
-<h3>About</h3>
 
 <p>
-OSMTools is a small set of Python tools for retrieving and using OpenStreetMap (OSM) images. Its original purpose was to draw a bunch of bus icons moving around on the map, which has been somewhat generalized and expanded.
+OSMViz is a small set of Python tools for retrieving and using OpenStreetMap (OSM) images (actually, Mapnik images served by Slippy Map). Its original purpose was to draw a bunch of things moving around on the map, which has been somewhat generalized and expanded.
 </p>
 
 <p>
-With OSMTools you can:
+With OSMViz you can:
 <ul>
-<li>Grab appropriate rendered OSM tiles from an OSM server
+<li>Grab appropriate rendered OSM tiles from an OSM server of your choosing
 <li>Patch tiles together into a bigger map
 <li>Easily animate stuff on that map (requires pygame)
 </ul>
 Currently it supports images using PIL and/or Pygame.
 </p>
 
+<h4>A note about OpenStreetMap maps</h4>
+<p>
+If you choose to pull tiles from the <a href="http://www.openstreetmap.org" target="TOP">openstreetmap.org</a> server, then there are some things you should know:
+<ul>
+<li> These tiles have a usage policy, available <a href="http://wiki.openstreetmap.org/wiki/Tile_usage_policy" target="TOP">here</a>.
+<li> These tiles are (c) <a href="http://www.openstreetmap.org" target="TOP">OpenStreetMap</a> and contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/" target="TOP">CC-BY-SA</a>
+</ul>
+</p>
 
-
-
-<h3>Using OSM Tools</h3>
+<h3>Using OSM Viz</h3>
 The code below will show a train running across the USA. Choo choo!
 <code><pre>
-from osmtools.animation import TrackingViz, Simulation
+from osmviz.animation import TrackingViz, Simulation
 
 start_lat,start_lon = (45.77,-68.65) <font color="#FF0000"># Northeast</font>
 end_lat,end_lon = (30.05,-118.25) <font color="#FF0000"># Southwest</font>
@@ -87,17 +89,17 @@ To run it yourself you need to have an existing "images/train.png" as well as an
 
 
 <h3>Links</h3>
-<a href="http://www.openstreetmap.org">OpenStreetMap</a><br>
-<a href="http://pygame.org">Pygame</a><br>
-<a href="http://www.pythonware.com/products/pil/">PIL</a>
+<a href="http://www.openstreetmap.org" target="TOP">OpenStreetMap</a><br>
+<a href="http://pygame.org" target="TOP">Pygame</a><br>
+<a href="http://www.pythonware.com/products/pil/" target="TOP">PIL</a>
 
 
-</td valign>
+</td>
 
 <td align=right valign=top>
-<img src="buses_moving2.jpg" border=1><br>
+<img src="images/buses_moving2.jpg" border=1><br>
 Some buses in San Francisco.<br>
-<img src="trainusa2.jpg" border=1><br>
+<img src="images/trainusa2.jpg" border=1><br>
 All aboard!
 </td>
 
