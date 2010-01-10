@@ -1,0 +1,241 @@
+
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module osmviz.animation</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="osmviz.html"><font color="#ffffff">osmviz</font></a>.animation</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/colin/colin_dev/transit/osmtools/src/osmviz/animation.py">/Users/colin/colin_dev/transit/osmtools/src/osmviz/animation.py</a></font></td></tr></table>
+    <p><tt>OpenStreetMap&nbsp;Animation&nbsp;Tool:<br>
+&nbsp;&nbsp;-&nbsp;Provides&nbsp;easy&nbsp;setup&nbsp;to&nbsp;show&nbsp;things&nbsp;moving&nbsp;around&nbsp;on&nbsp;a&nbsp;map.<br>
+&nbsp;&nbsp;-&nbsp;Requires&nbsp;pygame.<br>
+&nbsp;<br>
+Basic&nbsp;idea:<br>
+&nbsp;&nbsp;1.&nbsp;Create&nbsp;<a href="#TrackingViz">TrackingViz</a>&nbsp;objects&nbsp;or&nbsp;your&nbsp;own&nbsp;custom&nbsp;<a href="#SimViz">SimViz</a>'s<br>
+&nbsp;&nbsp;2.&nbsp;Create&nbsp;a&nbsp;<a href="#Simulation">Simulation</a>&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;those&nbsp;Viz's<br>
+&nbsp;&nbsp;3.&nbsp;Call&nbsp;the&nbsp;<a href="#Simulation">Simulation</a>'s&nbsp;run()&nbsp;method<br>
+&nbsp;&nbsp;4.&nbsp;Run&nbsp;the&nbsp;simulation:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Mouse&nbsp;over&nbsp;icons&nbsp;to&nbsp;display&nbsp;labels<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;up/down&nbsp;keys&nbsp;increase/decrease&nbsp;speed&nbsp;of&nbsp;simulation<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;left/right&nbsp;keys&nbsp;move&nbsp;simulation&nbsp;to&nbsp;begin/end&nbsp;of&nbsp;time&nbsp;window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;space&nbsp;bar&nbsp;sets&nbsp;speed&nbsp;to&nbsp;zero<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;escape&nbsp;key&nbsp;exits<br>
+&nbsp;<br>
+The&nbsp;<a href="#TrackingViz">TrackingViz</a>&nbsp;class&nbsp;can&nbsp;be&nbsp;used&nbsp;without&nbsp;any&nbsp;knowledge&nbsp;of&nbsp;Pygame.&nbsp;All&nbsp;you<br>
+need&nbsp;is&nbsp;an&nbsp;image&nbsp;you&nbsp;want&nbsp;to&nbsp;put&nbsp;on&nbsp;the&nbsp;map&nbsp;and&nbsp;a&nbsp;function&nbsp;defining&nbsp;where&nbsp;it<br>
+should&nbsp;be&nbsp;on&nbsp;the&nbsp;map&nbsp;as&nbsp;a&nbsp;function&nbsp;of&nbsp;time.<br>
+&nbsp;<br>
+For&nbsp;any&nbsp;other&nbsp;visualization&nbsp;on&nbsp;the&nbsp;map,&nbsp;you&nbsp;will&nbsp;want&nbsp;to&nbsp;override&nbsp;the<br>
+<a href="#SimViz">SimViz</a>&nbsp;class.&nbsp;This&nbsp;will&nbsp;require&nbsp;knowledge&nbsp;of&nbsp;how&nbsp;to&nbsp;use&nbsp;Pygame.&nbsp;Basically<br>
+a&nbsp;Pygame&nbsp;Surface&nbsp;will&nbsp;be&nbsp;passed&nbsp;in&nbsp;when&nbsp;it&nbsp;is&nbsp;time&nbsp;to&nbsp;draw.<br>
+&nbsp;<br>
+The&nbsp;<a href="#Simulation">Simulation</a>&nbsp;class&nbsp;just&nbsp;does&nbsp;the&nbsp;following:<br>
+&nbsp;&nbsp;1.&nbsp;Downloads&nbsp;OSM&nbsp;tiles,&nbsp;patches&nbsp;them&nbsp;together,&nbsp;and&nbsp;resizes<br>
+&nbsp;&nbsp;2.&nbsp;Displays&nbsp;a&nbsp;window&nbsp;with&nbsp;the&nbsp;map&nbsp;on&nbsp;it<br>
+&nbsp;&nbsp;3.&nbsp;Runs&nbsp;a&nbsp;timer&nbsp;and&nbsp;has&nbsp;all&nbsp;Viz&nbsp;objects&nbsp;draw&nbsp;to&nbsp;the&nbsp;map&nbsp;at&nbsp;each&nbsp;frame.<br>
+&nbsp;<br>
+Keyboard&nbsp;input&nbsp;is&nbsp;accepted&nbsp;to&nbsp;control&nbsp;the&nbsp;speed&nbsp;of&nbsp;the&nbsp;simulation.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#fffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="pygame.html">pygame</a><br>
+</td><td width="25%" valign=top><a href="time.html">time</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="__builtin__.html#object">__builtin__.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="osmviz.animation.html#SimViz">SimViz</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="osmviz.animation.html#TrackingViz">TrackingViz</a>
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="osmviz.animation.html#Simulation">Simulation</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SimViz">class <strong>SimViz</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Abstract&nbsp;interface&nbsp;representing&nbsp;an&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;which&nbsp;knows&nbsp;how&nbsp;and&nbsp;when&nbsp;<br>
+to&nbsp;display&nbsp;itself&nbsp;on&nbsp;a&nbsp;surface&nbsp;inside&nbsp;of&nbsp;a&nbsp;<a href="#Simulation">Simulation</a>.<br>
+&nbsp;<br>
+This&nbsp;class&nbsp;is&nbsp;meant&nbsp;to&nbsp;serve&nbsp;as&nbsp;an&nbsp;interface&nbsp;definition&nbsp;to&nbsp;be<br>
+subclassed&nbsp;(or&nbsp;at&nbsp;least&nbsp;replicated).<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="SimViz-__init__"><strong>__init__</strong></a>(self, drawingOrder<font color="#909090">=0</font>)</dt><dd><tt>Base&nbsp;constructor&nbsp;for&nbsp;a&nbsp;<a href="#SimViz">SimViz</a>.<br>
+'drawingOrder'&nbsp;is&nbsp;used&nbsp;to&nbsp;specify&nbsp;the&nbsp;order&nbsp;in&nbsp;which&nbsp;this&nbsp;viz<br>
+is&nbsp;drawn&nbsp;to&nbsp;the&nbsp;surface&nbsp;relative&nbsp;to&nbsp;others.&nbsp;See&nbsp;'<a href="#SimViz-getDrawingOrder">getDrawingOrder</a>()'.</tt></dd></dl>
+
+<dl><dt><a name="SimViz-drawToSurface"><strong>drawToSurface</strong></a>(self, surf)</dt><dd><tt>To&nbsp;be&nbsp;overridden.<br>
+Draws&nbsp;this&nbsp;viz&nbsp;on&nbsp;the&nbsp;supplied&nbsp;surface,&nbsp;according&nbsp;to&nbsp;its<br>
+internal&nbsp;state.</tt></dd></dl>
+
+<dl><dt><a name="SimViz-getBoundingBox"><strong>getBoundingBox</strong></a>(self)</dt><dd><tt>To&nbsp;be&nbsp;overridden.<br>
+Returns&nbsp;(latmin,latmax,lonmin,lonmax)&nbsp;the&nbsp;lat/lon&nbsp;bounds<br>
+of&nbsp;this&nbsp;visualization&nbsp;<a href="__builtin__.html#object">object</a>.<br>
+Note&nbsp;that&nbsp;for&nbsp;<a href="#Simulation">Simulation</a>&nbsp;purposes,&nbsp;this&nbsp;does&nbsp;not&nbsp;need&nbsp;to<br>
+be&nbsp;implemented&nbsp;if&nbsp;this&nbsp;<a href="#SimViz">SimViz</a>&nbsp;is&nbsp;passed&nbsp;in&nbsp;as&nbsp;one&nbsp;of&nbsp;the&nbsp;<br>
+scene_viz's&nbsp;(as&nbsp;opposed&nbsp;to&nbsp;an&nbsp;actor_viz).</tt></dd></dl>
+
+<dl><dt><a name="SimViz-getDrawingOrder"><strong>getDrawingOrder</strong></a>(self)</dt><dd><tt>Returns&nbsp;an&nbsp;integer&nbsp;representing&nbsp;the&nbsp;order&nbsp;in&nbsp;which&nbsp;this&nbsp;viz<br>
+should&nbsp;be&nbsp;drawn&nbsp;relative&nbsp;to&nbsp;other&nbsp;vizs.&nbsp;Vizs&nbsp;with&nbsp;a&nbsp;higher<br>
+drawing&nbsp;order&nbsp;are&nbsp;drawn&nbsp;after&nbsp;those&nbsp;with&nbsp;a&nbsp;lower&nbsp;drawing<br>
+order,&nbsp;meaning&nbsp;they&nbsp;will&nbsp;be&nbsp;drawn&nbsp;on&nbsp;top.</tt></dd></dl>
+
+<dl><dt><a name="SimViz-getLabel"><strong>getLabel</strong></a>(self)</dt><dd><tt>To&nbsp;be&nbsp;overridden&nbsp;(optionally).<br>
+Returns&nbsp;string&nbsp;to&nbsp;be&nbsp;displayed&nbsp;as&nbsp;descriptive&nbsp;label&nbsp;for&nbsp;this<br>
+viz&nbsp;<a href="__builtin__.html#object">object</a>.&nbsp;Default&nbsp;behavior&nbsp;is&nbsp;to&nbsp;return&nbsp;None,&nbsp;meaning&nbsp;no<br>
+label&nbsp;should&nbsp;ever&nbsp;be&nbsp;displayed.</tt></dd></dl>
+
+<dl><dt><a name="SimViz-getTimeInterval"><strong>getTimeInterval</strong></a>(self)</dt><dd><tt>To&nbsp;be&nbsp;overridden.<br>
+Returns&nbsp;(begin,end)&nbsp;time&nbsp;values&nbsp;for&nbsp;the&nbsp;existence&nbsp;of&nbsp;this<br>
+visualization&nbsp;<a href="__builtin__.html#object">object</a>.<br>
+May&nbsp;return&nbsp;(&nbsp;-Inf,Inf&nbsp;)&nbsp;to&nbsp;indicate&nbsp;that&nbsp;it&nbsp;is&nbsp;always&nbsp;present.</tt></dd></dl>
+
+<dl><dt><a name="SimViz-mouseIntersect"><strong>mouseIntersect</strong></a>(self, mousex, mousey)</dt><dd><tt>To&nbsp;be&nbsp;overridden.<br>
+Returns&nbsp;True&nbsp;if&nbsp;the&nbsp;given&nbsp;mouse&nbsp;location&nbsp;is&nbsp;inside&nbsp;some<br>
+designated&nbsp;region&nbsp;of&nbsp;this&nbsp;visualization.<br>
+Note&nbsp;that&nbsp;for&nbsp;<a href="#Simulation">Simulation</a>&nbsp;purposes,&nbsp;if&nbsp;<a href="#SimViz-getLabel">getLabel</a>()&nbsp;returns<br>
+None&nbsp;then&nbsp;this&nbsp;method&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;be&nbsp;implemented.</tt></dd></dl>
+
+<dl><dt><a name="SimViz-setState"><strong>setState</strong></a>(self, simtime, getXY)</dt><dd><tt>To&nbsp;be&nbsp;overridden.<br>
+Sets&nbsp;the&nbsp;internal&nbsp;state&nbsp;of&nbsp;this&nbsp;viz&nbsp;to&nbsp;the&nbsp;specified&nbsp;time.<br>
+This&nbsp;should&nbsp;be&nbsp;stored&nbsp;internally,&nbsp;for&nbsp;subsequent&nbsp;calls&nbsp;to<br>
+methods&nbsp;such&nbsp;as&nbsp;drawToSurface&nbsp;or&nbsp;mouseIntersect.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Simulation">class <strong>Simulation</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>A&nbsp;collection&nbsp;of&nbsp;generic&nbsp;<a href="#SimViz">SimViz</a>'s&nbsp;and&nbsp;a&nbsp;timer,&nbsp;of&nbsp;sorts.&nbsp;This&nbsp;lets&nbsp;the&nbsp;<br>
+visualizer&nbsp;say&nbsp;"Give&nbsp;me&nbsp;coordinates&nbsp;of&nbsp;each&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;at&nbsp;time&nbsp;T".&nbsp;A&nbsp;<a href="#Simulation-run">run</a>()<br>
+method&nbsp;is&nbsp;provided&nbsp;which&nbsp;displays&nbsp;the&nbsp;simulation&nbsp;in&nbsp;a&nbsp;pygame&nbsp;window.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Simulation-__init__"><strong>__init__</strong></a>(self, actor_vizs, scene_vizs, initTime<font color="#909090">=0</font>)</dt><dd><tt>Given&nbsp;a&nbsp;collection&nbsp;of&nbsp;generic&nbsp;<a href="#SimViz">SimViz</a>&nbsp;objects,&nbsp;and&nbsp;optionally&nbsp;an&nbsp;<br>
+initial&nbsp;time,&nbsp;creates&nbsp;a&nbsp;<a href="#Simulation">Simulation</a>&nbsp;<a href="__builtin__.html#object">object</a>.<br>
+Both&nbsp;actor_vizs&nbsp;and&nbsp;scene_vizs&nbsp;should&nbsp;be&nbsp;a&nbsp;collection&nbsp;of&nbsp;<a href="#SimViz">SimViz</a><br>
+objects.&nbsp;The&nbsp;difference&nbsp;is&nbsp;that&nbsp;the&nbsp;actor_vizs&nbsp;will&nbsp;determine&nbsp;the<br>
+bounds&nbsp;of&nbsp;the&nbsp;animation&nbsp;in&nbsp;space&nbsp;and&nbsp;time,&nbsp;while&nbsp;the&nbsp;location&nbsp;and<br>
+time&nbsp;windows&nbsp;of&nbsp;the&nbsp;scene_vizs&nbsp;will&nbsp;be&nbsp;largely&nbsp;ignored.</tt></dd></dl>
+
+<dl><dt><a name="Simulation-getXY"><strong>getXY</strong></a>(self, lat, lon, bounds, ssize)</dt><dd><tt>Given&nbsp;coordinates&nbsp;in&nbsp;lon,lat,&nbsp;and&nbsp;a&nbsp;screen&nbsp;size,<br>
+returns&nbsp;the&nbsp;corresponding&nbsp;(x,y)&nbsp;pixel&nbsp;coordinates.</tt></dd></dl>
+
+<dl><dt><a name="Simulation-printTime"><strong>printTime</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Simulation-run"><strong>run</strong></a>(self, speed<font color="#909090">=0.0</font>, windowsize<font color="#909090">=(1280, 800)</font>, refresh_rate<font color="#909090">=1.0</font>, font<font color="#909090">='/Library/Frameworks/Python.framework/Versions/2....b/python2.5/site-packages/pygame/freesansbold.ttf'</font>, fontsize<font color="#909090">=10</font>, osmzoom<font color="#909090">=14</font>)</dt><dd><tt>Pops&nbsp;up&nbsp;a&nbsp;window&nbsp;and&nbsp;displays&nbsp;the&nbsp;simulation&nbsp;on&nbsp;it.<br>
+Speed&nbsp;is&nbsp;advancement&nbsp;of&nbsp;sim&nbsp;in&nbsp;seconds/second.<br>
+Refresh&nbsp;rate&nbsp;is&nbsp;pause&nbsp;in&nbsp;seconds&nbsp;between&nbsp;frames.<br>
+Windowsize&nbsp;is&nbsp;the&nbsp;desired&nbsp;(width,height)&nbsp;of&nbsp;the&nbsp;display&nbsp;window.<br>
+Font&nbsp;is&nbsp;either&nbsp;the&nbsp;full&nbsp;path&nbsp;to&nbsp;a&nbsp;pygame-compatible&nbsp;font&nbsp;file<br>
+&nbsp;&nbsp;(e.g.&nbsp;a&nbsp;.ttf&nbsp;file),&nbsp;or&nbsp;an&nbsp;actual&nbsp;pygame&nbsp;Font&nbsp;<a href="__builtin__.html#object">object</a>,&nbsp;or&nbsp;None.<br>
+&nbsp;&nbsp;If&nbsp;None,&nbsp;then&nbsp;labels&nbsp;will&nbsp;not&nbsp;be&nbsp;rendered,&nbsp;instead&nbsp;they&nbsp;will&nbsp;be<br>
+&nbsp;&nbsp;printed&nbsp;to&nbsp;stdout.<br>
+Fontsize&nbsp;is&nbsp;the&nbsp;size&nbsp;of&nbsp;the&nbsp;font,&nbsp;if&nbsp;it&nbsp;exists.</tt></dd></dl>
+
+<dl><dt><a name="Simulation-setTime"><strong>setTime</strong></a>(self, time)</dt><dd><tt>Moves&nbsp;all&nbsp;bus&nbsp;tracks&nbsp;to&nbsp;the&nbsp;given&nbsp;time.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="TrackingViz">class <strong>TrackingViz</strong></a>(<a href="osmviz.animation.html#SimViz">SimViz</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>A&nbsp;generic&nbsp;<a href="#SimViz">SimViz</a>&nbsp;which&nbsp;displays&nbsp;a&nbsp;moving&nbsp;image&nbsp;on&nbsp;the&nbsp;map.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="osmviz.animation.html#TrackingViz">TrackingViz</a></dd>
+<dd><a href="osmviz.animation.html#SimViz">SimViz</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="TrackingViz-__init__"><strong>__init__</strong></a>(self, label, image, getLatLonAtTimeFunc, time_window, bounding_box, drawing_order<font color="#909090">=0</font>)</dt><dd><tt>Constructs&nbsp;a&nbsp;<a href="#TrackingViz">TrackingViz</a>.<br>
+Arguments:<br>
+&nbsp;&nbsp;label&nbsp;-&nbsp;text&nbsp;to&nbsp;display&nbsp;when&nbsp;moused&nbsp;over,&nbsp;or&nbsp;None&nbsp;for&nbsp;no&nbsp;text<br>
+&nbsp;&nbsp;image&nbsp;-&nbsp;filename&nbsp;of&nbsp;image&nbsp;to&nbsp;display&nbsp;on&nbsp;map<br>
+&nbsp;&nbsp;getLatLonAtTimeFunc&nbsp;-&nbsp;a&nbsp;function&nbsp;that&nbsp;takes&nbsp;one&nbsp;argument&nbsp;(time)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;returns&nbsp;(lat,lon)<br>
+&nbsp;&nbsp;time_window&nbsp;-&nbsp;a&nbsp;tuple&nbsp;(begin_time,end_time)&nbsp;representing&nbsp;the&nbsp;times<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;exists<br>
+&nbsp;&nbsp;bounding_box&nbsp;-&nbsp;a&nbsp;tuple&nbsp;(min_lat,max_lat,min_lon,max_lon)&nbsp;representing<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;farthest&nbsp;bounds&nbsp;that&nbsp;this&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;will&nbsp;reach<br>
+&nbsp;&nbsp;drawing_order&nbsp;-&nbsp;see&nbsp;<a href="#SimViz">SimViz</a>.<a href="#TrackingViz-getDrawingOrder">getDrawingOrder</a>()</tt></dd></dl>
+
+<dl><dt><a name="TrackingViz-drawToSurface"><strong>drawToSurface</strong></a>(self, surf)</dt></dl>
+
+<dl><dt><a name="TrackingViz-getBoundingBox"><strong>getBoundingBox</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="TrackingViz-getLabel"><strong>getLabel</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="TrackingViz-getTimeInterval"><strong>getTimeInterval</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="TrackingViz-mouseIntersect"><strong>mouseIntersect</strong></a>(self, mousex, mousey)</dt></dl>
+
+<dl><dt><a name="TrackingViz-setState"><strong>setState</strong></a>(self, simtime, getXY)</dt></dl>
+
+<hr>
+Methods inherited from <a href="osmviz.animation.html#SimViz">SimViz</a>:<br>
+<dl><dt><a name="TrackingViz-getDrawingOrder"><strong>getDrawingOrder</strong></a>(self)</dt><dd><tt>Returns&nbsp;an&nbsp;integer&nbsp;representing&nbsp;the&nbsp;order&nbsp;in&nbsp;which&nbsp;this&nbsp;viz<br>
+should&nbsp;be&nbsp;drawn&nbsp;relative&nbsp;to&nbsp;other&nbsp;vizs.&nbsp;Vizs&nbsp;with&nbsp;a&nbsp;higher<br>
+drawing&nbsp;order&nbsp;are&nbsp;drawn&nbsp;after&nbsp;those&nbsp;with&nbsp;a&nbsp;lower&nbsp;drawing<br>
+order,&nbsp;meaning&nbsp;they&nbsp;will&nbsp;be&nbsp;drawn&nbsp;on&nbsp;top.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="osmviz.animation.html#SimViz">SimViz</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>Inf</strong> = inf</td></tr></table>
+</body></html>
