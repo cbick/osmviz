@@ -1,11 +1,11 @@
 ===============================
-===    OSMTools README      ===
+===    OSMViz README      ===
 ===============================
 
-An OpenStreetMap Toolkit for Python
+An OpenStreetMap Visualization Toolkit for Python
 
-=== OSMTools License ===
-OSMTools is released under the MIT license.
+=== OSMViz License ===
+OSMViz is released under the MIT license.
 See LICENSE in this directory.
 
 
@@ -19,12 +19,12 @@ These tiles are (c) OpenStreetMap & contributors, CC-BY-SA.
 OpenStreetMap: http://www.openstreetmap.org
 CC-BY-SA: http://creativecommons.org/licenses/by-sa/2.0/
 
-You can tell OSMTools to use any slippymap server provided
+You can tell OSMViz to use any slippymap server provided
 tiles that you wish, which may have its own usage policy.
 
 === About ===
 
-OSMTools is a small set of Python tools for retrieving
+OSMViz is a small set of Python tools for retrieving
 and using Mapnik tiles from a Slippy Map server 
 (you may know these as OpenStreetMap images).
 

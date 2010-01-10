@@ -1,5 +1,5 @@
-from osmtools.animation import SimViz, TrackingViz, Simulation
-from osmtools.manager import PygameImageManager, PILImageManager, OSMManager
+from osmviz.animation import SimViz, TrackingViz, Simulation
+from osmviz.manager import PygameImageManager, PILImageManager, OSMManager
 import pygame
 import PIL.Image as Image
 

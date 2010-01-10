@@ -306,7 +306,7 @@ class _useragenthack(urllib.FancyURLopener):
         del self.addheaders[i]
         break
     self.addheader('User-Agent',
-                   'OSMTools/1.0 +http://cbick.github.com/osmtools')
+                   'OSMViz/1.0 +http://cbick.github.com/osmviz')
 
 #import httplib
 #httplib.HTTPConnection.debuglevel = 1

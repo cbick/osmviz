@@ -1,9 +1,7 @@
 <html>
 <head>
 
-<title>
-OSM Tools
-</title>
+<title>OSM Viz</title>
 <link rel="stylesheet" type="text/css" href="css.css"/>
 
 </head>
@@ -13,22 +11,22 @@ OSM Tools
 <iframe src ="nav.html" id="nav">
   <p>Your browser does not support iframes. Navigate from <a href="nav.html">here</a>.</p>
 </iframe>
-  <h2>OSM Tools</h2>
+  <h2>OSM Viz</h2>
   <hr>
 <table border=0 width=70%>
 <tr>
 
 <td width=50% valign=top> 
 
-<h3>An OpenStreetMap Toolkit for Python</h3>
+<h3>An OpenStreetMap Visualization Toolkit for Python</h3>
 
 
 <p>
-OSMTools is a small set of Python tools for retrieving and using OpenStreetMap (OSM) images (actually, Mapnik images served by Slippy Map). Its original purpose was to draw a bunch of bus icons moving around on the map, which has been somewhat generalized and expanded.
+OSMViz is a small set of Python tools for retrieving and using OpenStreetMap (OSM) images (actually, Mapnik images served by Slippy Map). Its original purpose was to draw a bunch of things moving around on the map, which has been somewhat generalized and expanded.
 </p>
 
 <p>
-With OSMTools you can:
+With OSMViz you can:
 <ul>
 <li>Grab appropriate rendered OSM tiles from an OSM server of your choosing
 <li>Patch tiles together into a bigger map
@@ -46,10 +44,10 @@ If you choose to pull tiles from the <a href="http://www.openstreetmap.org" targ
 </ul>
 </p>
 
-<h3>Using OSM Tools</h3>
+<h3>Using OSM Viz</h3>
 The code below will show a train running across the USA. Choo choo!
 <code><pre>
-from osmtools.animation import TrackingViz, Simulation
+from osmviz.animation import TrackingViz, Simulation
 
 start_lat,start_lon = (45.77,-68.65) <font color="#FF0000"># Northeast</font>
 end_lat,end_lon = (30.05,-118.25) <font color="#FF0000"># Southwest</font>
