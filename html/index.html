@@ -3,21 +3,26 @@
 
 <title>OSM Viz</title>
 <link rel="stylesheet" type="text/css" href="css.css"/>
-<meta name="google-site-verification" content="AjA9MCkFGUW8ZwhknoEAjLteJ8oAFV2ht5YVXTHRC8M" />
 
 </head>
 
 <body>
 
+<div id="wrapper">
 <iframe src ="nav.html" id="nav">
   <p>Your browser does not support iframes. Navigate from <a href="nav.html">here</a>.</p>
 </iframe>
+<div id="content">
   <h2>OSM Viz</h2>
   <hr>
-<table border=0 width=70%>
-<tr>
 
-<td width=50% valign=top> 
+<!-- Right-side images -->
+<div style="float:right;margin-left:20px;">
+<img src="images/buses_moving2.jpg" border=1><br>
+Some buses in San Francisco.<br>
+<img src="images/trainusa2.jpg" border=1><br>
+All aboard!
+</div>
 
 <h3>An OpenStreetMap Visualization Toolkit for Python</h3>
 
@@ -33,7 +38,7 @@ With OSMViz you can:
 <li>Patch tiles together into a bigger map
 <li>Easily animate stuff on that map (requires pygame)
 </ul>
-OSMViz is released under the <a href="http://www.opensource.org/licenses/mit-license.php">MIT license</a>. Currently it supports images using PIL and/or Pygame.
+OSMViz is released under the <a href="http://www.opensource.org/licenses/mit-license.php" target="TOP">MIT license</a>. Currently it supports images using PIL and/or Pygame.
 </p>
 
 <h4>A note about OpenStreetMap maps</h4>
@@ -46,7 +51,10 @@ If you choose to pull tiles from the <a href="http://www.openstreetmap.org" targ
 </p>
 
 <h3>Using OSM Viz</h3>
+<p>
 The code below will show a train running across the USA. Choo choo!
+</p>
+
 <code><pre>
 from osmviz.animation import TrackingViz, Simulation
 
@@ -84,30 +92,21 @@ While the animation is running, you can control it as follows:
 <li>Escape key exits.
 </ul>
 </p>
+
 <p>
 To run it yourself you need to have an existing "images/train.png" as well as an empty "maptiles/" directory. These already exist in the "test" directory in the source download; in fact one of the included tests is to show the same train.
 </p>
 
 
 <h3>Links</h3>
+<p>
 <a href="http://www.openstreetmap.org" target="TOP">OpenStreetMap</a><br>
 <a href="http://pygame.org" target="TOP">Pygame</a><br>
 <a href="http://www.pythonware.com/products/pil/" target="TOP">PIL</a>
+</p>
 
 
-</td>
-
-<td align=right valign=top>
-<img src="images/buses_moving2.jpg" border=1><br>
-Some buses in San Francisco.<br>
-<img src="images/trainusa2.jpg" border=1><br>
-All aboard!
-</td>
-
-</tr>
-
-
-</table>
-
+</div><!--content-->
+</div><!--wrapper-->
 </body>
 </html>
