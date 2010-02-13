@@ -1,6 +1,5 @@
 From this directory run
 ./test.sh
-to see a train go across the US.
+to run all tests.
 
-To test using the visualizer.py file, you need to add all the GTFS BusTrack stuff to the PYTHONPATH variable, and link ../config in order for test to run.
 
