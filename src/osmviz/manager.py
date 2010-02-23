@@ -37,7 +37,7 @@ Basic idea:
 import math
 import urllib
 import os.path as path
-
+import os
 
 class ImageManager(object):
   """
@@ -194,8 +194,24 @@ class OSMManager(object):
     server = kwargs.get('server')
     mgr = kwargs.get('image_manager')
     
-    if cache: self.cache = cache
-    else:     self.cache = "/tmp"
+    if cache: 
+      if not os.path.isdir(cache):
+        try:
+          os.makedirs(cache, 0766)
+          self.cache = cache
+          print "WARNING: Created cache dir",cache
+        except:
+          print "Could not make cache dir",cache
+      elif not os.access(cache, os.R_OK | os.W_OK):
+        print "Insufficient privileges on cache dir",cache
+      else:
+        self.cache = cache
+    if not self.cache:
+      self.cache = "/tmp"
+      print "WARNING: Using /tmp to cache maptiles."
+      if not os.access("/tmp", os.R_OK | os.W_OK):
+        print " ERROR: Insufficient access to /tmp."
+        raise Exception, "Unable to find/create/use maptile cache directory."
       
     if server: self.server = server
     else:      self.server = "http://tile.openstreetmap.org"
