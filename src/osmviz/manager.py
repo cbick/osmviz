@@ -1,3 +1,19 @@
+"""
+OpenStreetMap Management Tool:
+  - Provides simple interface to retrieve and tile OSM images
+  - Can use pygame or PIL (to generate pygame Surfaces or PIL images)
+
+Basic idea:
+  1. Choose an ImageManager class and construct an instance.
+     - Pygame and PIL implementations available
+     - To make your own custom ImageManager, override the ImageManager
+       class.
+  2. Construct an OSMManager object.
+     - Can provide custom OSM server URL, etc.
+  3. Use the OSMManager to retrieve individual tiles and do as you please
+     or patch tiles together into a larger image for you.
+"""
+
 # Copyright (c) 2010 Colin Bick, Robert Damphousse
 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -17,22 +33,6 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-
-"""
-OpenStreetMap Management Tool:
-  - Provides simple interface to retrieve and tile OSM images
-  - Can use pygame or PIL (to generate pygame Surfaces or PIL images)
-
-Basic idea:
-  1. Choose an ImageManager class and construct an instance.
-     - Pygame and PIL implementations available
-     - To make your own custom ImageManager, override the ImageManager
-       class.
-  2. Construct an OSMManager object.
-     - Can provide custom OSM server URL, etc.
-  3. Use the OSMManager to retrieve individual tiles and do as you please
-     or patch tiles together into a larger image for you.
-"""
 
 import math
 import urllib
