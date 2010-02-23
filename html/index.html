@@ -54,15 +54,27 @@ If you choose to pull tiles from the <a href="http://www.openstreetmap.org" targ
 <p>
 The code below will show a train running across the USA. Choo choo!
 </p>
-
+<div class="code">
 <code><pre>
 from osmviz.animation import TrackingViz, Simulation
 
-start_lat,start_lon = (45.77,-68.65) <font color="#FF0000"># Northeast</font>
-end_lat,end_lon = (30.05,-118.25) <font color="#FF0000"># Southwest</font>
-begin_time, end_time = 0, 60 <font color="#FF0000"># In 60 seconds!</font>
+<span class="comment"># Define begin/end points, duration, and icon for our train</span>
 
-def locAtTime(t): <font color="#FF0000"># Basic interpolator</font>
+start_lat,start_lon = (45.77,-68.65) <span class="comment"># Northeast</span>
+end_lat,end_lon = (30.05,-118.25) <span class="comment"># Southwest</span>
+begin_time, end_time = 0, 60 <span class="comment"># In 60 seconds!</span>
+
+image_f = "images/train.png" 
+
+<span class="comment"># Define bounds and zoom for the visible map, how much map do we show?</span>
+
+bound_ne_lat,bound_ne_lon = (46,-68.5)
+bound_sw_lat,bound_sw_lon = (30,-119)
+zoom = 6 <span class="comment"># OSM zoom level</span>
+
+<span class="comment"># Define an interpolater to create animation points</span>
+
+def locAtTime(t):
     if t &lt 0: return start_lat,start_lon
     if t &gt 60: return end_lat,end_lon
     frac = t/60.0
@@ -71,17 +83,20 @@ def locAtTime(t): <font color="#FF0000"># Basic interpolator</font>
     return interp_lat,interp_lon
 
 
-image_f = "images/train.png" 
-zoom = 6 <font color="#FF0000"># OSM zoom level</font>
+<span class="comment"># Create a TrackingViz</span>
+
 viz = TrackingViz("Continental Espresso", image_f, locAtTime,
                    (begin_time,end_time), 
-                   (30,46,-119,-68.5), <font color="#FF0000"># lat/lon bounding box</font>
-                  1)
-sim = Simulation([viz,],[],0)
+                   (bound_sw_lat,bound_ne_lat,bound_sw_lon,bound_ne_lon), 
+                  1) <span class="comment"># Drawing order</span>
+
+<span class="comment"># Add our TrackingViz to a Simulation and then run the simulation</span>
+
+sim = Simulation([viz,],[],0) <span class="comment"># ([actor vizs], [scene vizs], initial time)</span>
 sim.run(speed=1,refresh_rate=0.1,osmzoom=zoom)
 
 </pre></code>
-
+</div><!--code class div-->
 <p>
 While the animation is running, you can control it as follows:
 <ul>

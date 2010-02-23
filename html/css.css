@@ -69,3 +69,14 @@ ul{
 p{
     padding-right:40%;
 }
+
+.comment{
+    color:#F00;
+}
+
+div.code{
+    width:650px;
+    border:1px dashed #000;
+    background-color:#FFE;
+    padding:10px;
+}
