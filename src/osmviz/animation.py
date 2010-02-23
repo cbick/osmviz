@@ -214,7 +214,7 @@ class Simulation(object):
   
   def __init__(self, actor_vizs, scene_vizs, initTime = 0):
     """
-    Given a collection of generic SimViz objects, and optionally an 
+    Given two collections of generic SimViz objects, and optionally an 
     initial time, creates a Simulation object.
     Both actor_vizs and scene_vizs should be a collection of SimViz
     objects. The difference is that the actor_vizs will determine the
