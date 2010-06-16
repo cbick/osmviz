@@ -194,6 +194,8 @@ class OSMManager(object):
     server = kwargs.get('server')
     mgr = kwargs.get('image_manager')
     
+    self.cache = None
+    
     if cache: 
       if not os.path.isdir(cache):
         try:
@@ -206,6 +208,7 @@ class OSMManager(object):
         print "Insufficient privileges on cache dir",cache
       else:
         self.cache = cache
+
     if not self.cache:
       self.cache = "/tmp"
       print "WARNING: Using /tmp to cache maptiles."
@@ -213,10 +216,15 @@ class OSMManager(object):
         print " ERROR: Insufficient access to /tmp."
         raise Exception, "Unable to find/create/use maptile cache directory."
       
-    if server: self.server = server
-    else:      self.server = "http://tile.openstreetmap.org"
-
-    self.manager = mgr
+    if server: 
+      self.server = server
+    else:      
+      self.server = "http://tile.openstreetmap.org"
+    
+    if mgr: # Assume it's a valid manager 
+      self.manager = mgr
+    else:
+      raise Exception, "OSMManager.__init__ requires argument image_manager"
 
 
   def getTileCoord(self, lon_deg, lat_deg, zoom):
