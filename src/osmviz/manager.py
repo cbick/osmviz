@@ -210,10 +210,13 @@ class OSMManager(object):
         self.cache = cache
 
     if not self.cache:
-      self.cache = "/tmp"
-      print "WARNING: Using /tmp to cache maptiles."
-      if not os.access("/tmp", os.R_OK | os.W_OK):
-        print " ERROR: Insufficient access to /tmp."
+      self.cache = ( os.getenv("TMPDIR")
+                     or os.getenv("TMP")
+                     or os.getenv("TEMP")
+                     or "/tmp" )
+      print "WARNING: Using %s to cache maptiles." % self.cache
+      if not os.access(self.cache, os.R_OK | os.W_OK):
+        print " ERROR: Insufficient access to %s." % self.cache
         raise Exception, "Unable to find/create/use maptile cache directory."
       
     if server: 
@@ -257,7 +260,7 @@ class OSMManager(object):
     the osm server every time the thing runs.
     """
     params = (zoom,tile_coord[0],tile_coord[1]);
-    return self.cache + "/%d_%d_%d.png" % params
+    return path.join(self.cache, "%d_%d_%d.png" % params)
 
   def retrieveTileImage(self,tile_coord,zoom):
     """
