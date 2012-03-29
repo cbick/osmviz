@@ -36,6 +36,7 @@ Basic idea:
 
 import math
 import urllib
+import hashlib
 import os.path as path
 import os
 
@@ -224,6 +225,11 @@ class OSMManager(object):
     else:      
       self.server = "http://tile.openstreetmap.org"
     
+    # Make a hash of the server URL to use in cached tile filenames.
+    md5 = hashlib.md5()
+    md5.update(self.server)
+    self.cache_prefix =  'osmviz-%s-' % md5.hexdigest()[:5]
+
     if mgr: # Assume it's a valid manager 
       self.manager = mgr
     else:
@@ -259,8 +265,8 @@ class OSMManager(object):
     if it was downloaded. That way we don't have to kill
     the osm server every time the thing runs.
     """
-    params = (zoom,tile_coord[0],tile_coord[1]);
-    return path.join(self.cache, "%d_%d_%d.png" % params)
+    params = (self.cache_prefix,zoom,tile_coord[0],tile_coord[1])
+    return path.join(self.cache, "%s%d_%d_%d.png" % params)
 
   def retrieveTileImage(self,tile_coord,zoom):
     """
